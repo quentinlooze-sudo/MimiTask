@@ -3,7 +3,7 @@
    Cache-first assets, network-first données
    ============================================== */
 
-const CACHE_NAME = 'mimitask-v5';
+const CACHE_NAME = 'mimitask-v6';
 
 const STATIC_ASSETS = [
   './',
@@ -95,7 +95,7 @@ self.addEventListener('fetch', (event) => {
       // Fallback offline minimal
       if (event.request.destination === 'document') {
         return new Response(
-          '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MimiTask — Hors ligne</title><style>body{font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#FAFAFA;color:#1A1A1A;text-align:center}h1{font-size:1.5rem}p{color:#6B7280}</style></head><body><div><h1>Hors ligne</h1><p>MimiTask n\'est pas disponible pour le moment. Vérifiez votre connexion.</p></div></body></html>',
+          '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MimiTask — Hors ligne</title><style>body{font-family:Nunito,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#FAFAFA;color:#1A1A1A;text-align:center}h1{font-size:1.5rem}p{color:#6B7280}</style></head><body><div><h1>Hors ligne</h1><p>MimiTask n\'est pas disponible pour le moment. Vérifiez votre connexion.</p></div></body></html>',
           { headers: { 'Content-Type': 'text/html; charset=utf-8' } }
         );
       }
