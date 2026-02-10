@@ -124,25 +124,57 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW registration failed:', err));
 }
 
-// PWA install prompt
-let deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+// PWA install logic
+function initInstall() {
+  const section = document.getElementById('install-section');
   const btn = document.getElementById('install-app-btn');
-  if (btn) btn.hidden = false;
-});
-function handleInstallClick() {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-  const btn = document.getElementById('install-app-btn');
-  if (btn) btn.hidden = true;
+  const safariGuide = document.getElementById('install-safari-guide');
+  const doneEl = document.getElementById('install-done');
+  if (!section) return;
+
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+    || navigator.standalone === true;
+  const isSafariIOS = /iP(hone|od|ad)/.test(navigator.userAgent)
+    && /WebKit/.test(navigator.userAgent)
+    && !/(CriOS|FxiOS|OPiOS|mercury)/.test(navigator.userAgent);
+
+  // Déjà installée
+  if (isStandalone) {
+    section.hidden = false;
+    doneEl.hidden = false;
+    return;
+  }
+
+  // Safari iOS — guide manuel
+  if (isSafariIOS) {
+    section.hidden = false;
+    safariGuide.hidden = false;
+    return;
+  }
+
+  // Chrome/Edge Android — beforeinstallprompt
+  let deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    section.hidden = false;
+    btn.hidden = false;
+  });
+
+  btn.addEventListener('click', () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      deferredPrompt = null;
+      btn.hidden = true;
+      doneEl.hidden = false;
+    });
+  });
 }
+initInstall();
 
 // Exposer pour les tests en console
 window.showToast = showToast;
 window.store = store;
-window.handleInstallClick = handleInstallClick;
 
 export { initNavigation, showToast };

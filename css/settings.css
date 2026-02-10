@@ -25,6 +25,32 @@
 .settings-item__label { font-weight: 500; }
 .settings-item__value { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
 .settings-item--danger .settings-item__label { color: var(--color-error, #DC2626); }
+/* --- Install PWA --- */
+.install-safari-guide {
+  padding: var(--space-md);
+  text-align: center;
+}
+.install-safari-guide__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+.install-safari-guide__icon {
+  display: inline-block;
+  font-size: var(--font-size-lg);
+  color: var(--color-primary);
+  vertical-align: middle;
+}
+.install-done {
+  padding: var(--space-md);
+  text-align: center;
+}
+.install-done__text {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-success);
+}
+
 .settings-footer {
   text-align: center; font-size: var(--font-size-xs);
   color: var(--color-text-secondary); padding: var(--space-lg) 0 var(--space-2xl);

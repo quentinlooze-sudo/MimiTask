@@ -260,8 +260,18 @@
       </div>
 
       <!-- Install PWA -->
-      <div class="settings-section">
-        <button class="btn btn--ghost" id="install-app-btn" hidden onclick="handleInstallClick()">📱 Installer l'app</button>
+      <div class="settings-section" id="install-section" hidden>
+        <div class="settings-group card">
+          <button class="settings-item settings-item--clickable" id="install-app-btn" hidden>
+            <span class="settings-item__label">📱 Installer l'app</span>
+          </button>
+          <div class="install-safari-guide" id="install-safari-guide" hidden>
+            <p class="install-safari-guide__text">Pour installer MimiTask : appuie sur <strong>Partager</strong> <span class="install-safari-guide__icon">↑</span> puis <strong>« Sur l'écran d'accueil »</strong></p>
+          </div>
+          <div class="install-done" id="install-done" hidden>
+            <span class="install-done__text">✅ App installée</span>
+          </div>
+        </div>
       </div>
 
       <p class="settings-footer">MimiTask v1.0 — Fait avec 💚</p>
