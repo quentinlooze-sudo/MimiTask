@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MimiTask — Design System Styleguide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+/* ═══ INLINE: variables.css + components.css for standalone usage ═══ */
+/* En production, utiliser les fichiers séparés via @import */
+
+/* Reset minimal */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+</style>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/components.css">
+  <style>
+/* ═══ Styleguide-only layout ═══ */
+body {
+  font-family: var(--font-family);
+  background-color: #F0F2F5;
+  color: var(--color-text);
+  line-height: var(--line-height-normal);
+  padding-bottom: var(--space-3xl);
+}
+.sg-hdr {
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+  color: white;
+  padding: var(--space-2xl) var(--space-lg);
+  text-align: center;
+}
+.sg-hdr h1 { font-size: var(--font-size-3xl); margin-bottom: var(--space-xs); }
+.sg-hdr p { opacity: 0.85; font-size: var(--font-size-lg); }
+.sg-nav {
+  position: sticky; top: 0; background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border); z-index: 100;
+  overflow-x: auto; white-space: nowrap;
+  padding: var(--space-sm) var(--space-md); display: flex; gap: var(--space-xs);
+}
+.sg-nav a {
+  display: inline-block; padding: var(--space-xs) var(--space-md);
+  font-size: var(--font-size-sm); font-weight: 500;
+  color: var(--color-text-secondary); text-decoration: none;
+  border-radius: var(--radius-full); transition: all 150ms; flex-shrink: 0;
+}
+.sg-nav a:hover { background: var(--color-primary-ghost); color: var(--color-primary); }
+.sg-c { max-width: 720px; margin: 0 auto; padding: 0 var(--space-md); }
+.sg-s { margin-top: var(--space-2xl); scroll-margin-top: 60px; }
+.sg-st {
+  font-size: var(--font-size-2xl); font-weight: 700; color: var(--color-primary-dark);
+  margin-bottom: var(--space-xs); padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--color-primary);
+}
+.sg-sd { font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: var(--space-lg); }
+.sg-ss { margin-bottom: var(--space-xl); }
+.sg-sst { font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--space-md); }
+.sg-d {
+  background: var(--color-bg); border: 1px solid var(--color-border);
+  border-radius: var(--radius-md); padding: var(--space-lg); margin-bottom: var(--space-sm);
+}
+.sg-row { display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center; }
+.sg-col { display: flex; flex-direction: column; gap: var(--space-md); }
+.sg-lbl {
+  font-size: var(--font-size-xs); color: var(--color-text-tertiary);
+  font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: var(--space-xs);
+}
+/* Swatches */
+.sg-sg { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: var(--space-sm); }
+.sg-sw { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--color-border); }
+.sg-swc { height: 52px; }
+.sg-swi { padding: var(--space-xs) var(--space-sm); background: white; font-size: var(--font-size-xs); }
+.sg-swn { font-weight: 600; display: block; }
+.sg-swh { color: var(--color-text-tertiary); }
+/* Type scale */
+.sg-tr { display: flex; align-items: baseline; gap: var(--space-md); padding: var(--space-sm) 0; border-bottom: 1px solid var(--color-divider); }
+.sg-tl { flex-shrink: 0; width: 80px; font-size: var(--font-size-xs); color: var(--color-text-tertiary); font-weight: 500; }
+/* Spacing */
+.sg-spr { display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-sm); }
+.sg-spb { background: var(--color-primary-ghost); border: 1px dashed var(--color-primary-light); border-radius: 2px; }
+.sg-spl { font-size: var(--font-size-xs); color: var(--color-text-secondary); min-width: 90px; }
+  </style>
+</head>
+<body>
+
+<header class="sg-hdr">
+  <h1>&#x1F996; MimiTask</h1>
+  <p>Design System Styleguide v1.0</p>
+</header>
+
+<nav class="sg-nav" aria-label="Styleguide">
+  <a href="#colors">Couleurs</a>
+  <a href="#typo">Typo</a>
+  <a href="#spacing">Espaces</a>
+  <a href="#buttons">Boutons</a>
+  <a href="#forms">Formulaires</a>
+  <a href="#cards">Cartes</a>
+  <a href="#badges">Badges</a>
+  <a href="#balance">Equilibre</a>
+  <a href="#toasts">Toasts</a>
+  <a href="#alerts">Alertes</a>
+  <a href="#mascot">Mascotte</a>
+  <a href="#misc">Divers</a>
+</nav>
+
+<div class="sg-c">
+
+<!-- ═══ COULEURS ═══ -->
+<section class="sg-s" id="colors">
+  <h2 class="sg-st">Couleurs</h2>
+  <p class="sg-sd">Palette semantique. Chaque couleur a un role precis defini dans variables.css.</p>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Principales</h3>
+    <div class="sg-sg">
+      <div class="sg-sw"><div class="sg-swc" style="background:#2D6A4F"></div><div class="sg-swi"><span class="sg-swn">Primary</span><span class="sg-swh">#2D6A4F</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#52B788"></div><div class="sg-swi"><span class="sg-swn">Primary Light</span><span class="sg-swh">#52B788</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#1B4332"></div><div class="sg-swi"><span class="sg-swn">Primary Dark</span><span class="sg-swh">#1B4332</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#F4A261"></div><div class="sg-swi"><span class="sg-swn">Secondary</span><span class="sg-swh">#F4A261</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#F7C59F"></div><div class="sg-swi"><span class="sg-swn">Sec. Light</span><span class="sg-swh">#F7C59F</span></div></div>
+    </div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Gamification</h3>
+    <div class="sg-sg">
+      <div class="sg-sw"><div class="sg-swc" style="background:#E9C46A"></div><div class="sg-swi"><span class="sg-swn">Points</span><span class="sg-swh">#E9C46A</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#E76F51"></div><div class="sg-swi"><span class="sg-swn">Streak</span><span class="sg-swh">#E76F51</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#7209B7"></div><div class="sg-swi"><span class="sg-swn">Reward</span><span class="sg-swh">#7209B7</span></div></div>
+    </div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Semantiques</h3>
+    <div class="sg-sg">
+      <div class="sg-sw"><div class="sg-swc" style="background:#2D6A4F"></div><div class="sg-swi"><span class="sg-swn">Success</span><span class="sg-swh">#2D6A4F</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#DC3545"></div><div class="sg-swi"><span class="sg-swn">Error</span><span class="sg-swh">#DC3545</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#F4A261"></div><div class="sg-swi"><span class="sg-swn">Warning</span><span class="sg-swh">#F4A261</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#3B82F6"></div><div class="sg-swi"><span class="sg-swn">Info</span><span class="sg-swh">#3B82F6</span></div></div>
+    </div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Neutres</h3>
+    <div class="sg-sg">
+      <div class="sg-sw"><div class="sg-swc" style="background:#1A1A2E"></div><div class="sg-swi"><span class="sg-swn">Text</span><span class="sg-swh">#1A1A2E</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#6B7280"></div><div class="sg-swi"><span class="sg-swn">Text Sec.</span><span class="sg-swh">#6B7280</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#9CA3AF"></div><div class="sg-swi"><span class="sg-swn">Text Tert.</span><span class="sg-swh">#9CA3AF</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#E5E7EB"></div><div class="sg-swi"><span class="sg-swn">Border</span><span class="sg-swh">#E5E7EB</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#FAFAFA;border:1px solid #E5E7EB"></div><div class="sg-swi"><span class="sg-swn">BG</span><span class="sg-swh">#FAFAFA</span></div></div>
+      <div class="sg-sw"><div class="sg-swc" style="background:#FFF;border:1px solid #E5E7EB"></div><div class="sg-swi"><span class="sg-swn">Surface</span><span class="sg-swh">#FFFFFF</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TYPOGRAPHIE ═══ -->
+<section class="sg-s" id="typo">
+  <h2 class="sg-st">Typographie</h2>
+  <p class="sg-sd">Inter (Google Fonts). Echelle xs (12px) a 3xl (32px). Min 14px sur mobile.</p>
+  <div class="sg-d">
+    <div class="sg-tr"><span class="sg-tl">3xl / 32px</span><span style="font-size:2rem;font-weight:700;letter-spacing:-0.02em">Bienvenue !</span></div>
+    <div class="sg-tr"><span class="sg-tl">2xl / 24px</span><span style="font-size:1.5rem;font-weight:700">Tableau de bord</span></div>
+    <div class="sg-tr"><span class="sg-tl">xl / 20px</span><span style="font-size:1.25rem;font-weight:600">Aujourd'hui</span></div>
+    <div class="sg-tr"><span class="sg-tl">lg / 18px</span><span style="font-size:1.125rem;font-weight:600">Section titre</span></div>
+    <div class="sg-tr"><span class="sg-tl">base / 16px</span><span style="font-size:1rem">Corps de texte &#8212; Transformez vos corvees en jeu d'equipe.</span></div>
+    <div class="sg-tr"><span class="sg-tl">sm / 14px</span><span style="font-size:0.875rem;color:var(--color-text-secondary)">Labels et texte secondaire</span></div>
+    <div class="sg-tr"><span class="sg-tl">xs / 12px</span><span style="font-size:0.75rem;color:var(--color-text-tertiary)">Captions, timestamps</span></div>
+  </div>
+</section>
+
+<!-- ═══ ESPACEMENTS ═══ -->
+<section class="sg-s" id="spacing">
+  <h2 class="sg-st">Espacements</h2>
+  <p class="sg-sd">Base 4px. Utiliser exclusivement ces tokens.</p>
+  <div class="sg-d">
+    <div class="sg-spr"><span class="sg-spl">2xs &#8212; 2px</span><div class="sg-spb" style="width:2px;height:20px"></div></div>
+    <div class="sg-spr"><span class="sg-spl">xs &#8212; 4px</span><div class="sg-spb" style="width:4px;height:20px"></div></div>
+    <div class="sg-spr"><span class="sg-spl">sm &#8212; 8px</span><div class="sg-spb" style="width:8px;height:20px"></div></div>
+    <div class="sg-spr"><span class="sg-spl">md &#8212; 16px</span><div class="sg-spb" style="width:16px;height:20px"></div></div>
+    <div class="sg-spr"><span class="sg-spl">lg &#8212; 24px</span><div class="sg-spb" style="width:24px;height:20px"></div></div>
+    <div class="sg-spr"><span class="sg-spl">xl &#8212; 32px</span><div class="sg-spb" style="width:32px;height:20px"></div></div>
+    <div class="sg-spr"><span class="sg-spl">2xl &#8212; 48px</span><div class="sg-spb" style="width:48px;height:20px"></div></div>
+    <div class="sg-spr"><span class="sg-spl">3xl &#8212; 64px</span><div class="sg-spb" style="width:64px;height:20px"></div></div>
+  </div>
+</section>
+
+<!-- ═══ BOUTONS ═══ -->
+<section class="sg-s" id="buttons">
+  <h2 class="sg-st">Boutons</h2>
+  <p class="sg-sd">Min-height 44px (cible tactile WCAG). CTA principaux pill-shaped, secondaires arrondis.</p>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Variantes</h3>
+    <div class="sg-d"><div class="sg-row">
+      <button class="btn btn--primary">Primary</button>
+      <button class="btn btn--secondary">Secondary</button>
+      <button class="btn btn--ghost">Ghost</button>
+      <button class="btn btn--danger">Danger</button>
+    </div></div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Tailles et etats</h3>
+    <div class="sg-d"><div class="sg-row">
+      <button class="btn btn--primary btn--sm">Petit</button>
+      <button class="btn btn--primary">Normal</button>
+      <button class="btn btn--primary" disabled>Disabled</button>
+      <button class="btn btn--primary btn--loading">Loading</button>
+      <button class="btn btn--icon" aria-label="Plus">+</button>
+    </div></div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Full width</h3>
+    <div class="sg-d"><div style="max-width:320px">
+      <button class="btn btn--primary btn--block">C'est parti !</button>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══ FORMULAIRES ═══ -->
+<section class="sg-s" id="forms">
+  <h2 class="sg-st">Formulaires</h2>
+  <p class="sg-sd">Tous les champs : min-height 44px, labels obligatoires, focus visible.</p>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Inputs</h3>
+    <div class="sg-d"><div class="sg-col" style="max-width:340px">
+      <div class="form-group">
+        <label class="form-label" for="i1">Nom de la tache</label>
+        <input class="form-input" id="i1" type="text" placeholder="ex : Vaisselle">
+      </div>
+      <div class="form-group">
+        <label class="form-label form-label--required" for="i2">Champ requis</label>
+        <input class="form-input" id="i2" type="text" value="Contenu">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="i3">Erreur</label>
+        <input class="form-input form-input--error" id="i3" type="text">
+        <span class="form-error">Ce champ est obligatoire</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="i4">Desactive</label>
+        <input class="form-input" id="i4" type="text" value="Non modifiable" disabled>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Select et Textarea</h3>
+    <div class="sg-d"><div class="sg-col" style="max-width:340px">
+      <div class="form-group">
+        <label class="form-label" for="s1">Recurrence</label>
+        <select class="form-select" id="s1">
+          <option>Chaque jour</option><option>Chaque semaine</option><option>Chaque mois</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="ta1">Description</label>
+        <textarea class="form-textarea" id="ta1" placeholder="Details optionnels..."></textarea>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Checkbox, Radio et Toggle</h3>
+    <div class="sg-d"><div class="sg-col">
+      <label class="form-check"><input class="form-check__input" type="checkbox" checked><span class="form-check__label">Vaisselle</span></label>
+      <label class="form-check"><input class="form-check__input" type="checkbox"><span class="form-check__label">Aspirateur</span></label>
+      <div class="divider"></div>
+      <label class="form-check"><input class="form-check__input" type="radio" name="r" checked><span class="form-check__label">Partenaire A</span></label>
+      <label class="form-check"><input class="form-check__input" type="radio" name="r"><span class="form-check__label">Partenaire B</span></label>
+      <div class="divider"></div>
+      <label class="toggle"><input class="toggle__input" type="checkbox" checked><div class="toggle__track"><div class="toggle__thumb"></div></div><span class="toggle__label">Notifications</span></label>
+      <label class="toggle"><input class="toggle__input" type="checkbox"><div class="toggle__track"><div class="toggle__thumb"></div></div><span class="toggle__label">Sons</span></label>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══ CARTES ═══ -->
+<section class="sg-s" id="cards">
+  <h2 class="sg-st">Cartes</h2>
+  <p class="sg-sd">Task cards avec gestion du debordement. Reward cards avec etat debloque.</p>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Carte tache</h3>
+    <div class="sg-d"><div class="sg-col" style="max-width:400px">
+      <div class="task-card">
+        <button class="task-card__check" aria-label="Valider">&#x2713;</button>
+        <div class="task-card__content"><div class="task-card__name">Faire la vaisselle</div><div class="task-card__meta"><span>&#x1F37D; Cuisine</span><span>&#183;</span><span>Chaque jour</span></div></div>
+        <span class="task-card__points">+8 pts</span>
+        <div class="task-card__avatar task-card__avatar--a">L</div>
+      </div>
+      <div class="task-card task-card--completed">
+        <button class="task-card__check" aria-label="Fait">&#x2713;</button>
+        <div class="task-card__content"><div class="task-card__name">Preparer le repas</div><div class="task-card__meta"><span>&#x1F373; Cuisine</span><span>&#183;</span><span>Fait a 14h30</span></div></div>
+        <span class="task-card__points">+12 pts</span>
+        <div class="task-card__avatar task-card__avatar--b">T</div>
+      </div>
+      <div class="task-card task-card--delegated">
+        <button class="task-card__check" aria-label="Valider">&#x2713;</button>
+        <div class="task-card__content"><div class="task-card__name">Passer l'aspirateur</div><div class="task-card__meta"><span>&#x1F9F9; Menage</span><span>&#183;</span><span>Delegue par Lea</span></div></div>
+        <span class="task-card__points">+10 pts</span>
+        <div class="task-card__avatar task-card__avatar--a">L</div>
+      </div>
+      <div class="task-card">
+        <button class="task-card__check" aria-label="Valider">&#x2713;</button>
+        <div class="task-card__content"><div class="task-card__name">Nettoyer et organiser le placard sous l'escalier qui deborde</div><div class="task-card__meta"><span>&#x2728; Menage</span></div></div>
+        <span class="task-card__points">+15 pts</span>
+        <div class="task-card__avatar task-card__avatar--b">T</div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Carte recompense</h3>
+    <div class="sg-d"><div class="sg-col" style="max-width:400px">
+      <div class="reward-card"><div class="reward-card__icon">&#x1F37F;</div><div class="reward-card__content"><div class="reward-card__name">Soiree cine</div><div class="reward-card__cost">150 pts</div></div></div>
+      <div class="reward-card reward-card--unlocked"><div class="reward-card__icon">&#x2615;</div><div class="reward-card__content"><div class="reward-card__name">Cafe a deux</div><div class="reward-card__cost">&#x2705; Debloque !</div></div></div>
+    </div></div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Carte generique</h3>
+    <div class="sg-d"><div class="sg-row">
+      <div class="card" style="max-width:220px"><div class="card__title">Score couple</div><div class="card__subtitle">345 pts ensemble</div></div>
+      <div class="card card--flat" style="max-width:220px"><div class="card__title">Flat variant</div><div class="card__subtitle">Sans ombre, avec bordure</div></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══ BADGES ═══ -->
+<section class="sg-s" id="badges">
+  <h2 class="sg-st">Badges, Chips et Avatars</h2>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Badges</h3>
+    <div class="sg-d"><div class="sg-row">
+      <span class="badge badge--points">&#x2B50; +12 pts</span>
+      <span class="badge badge--streak">&#x1F525; 5 jours</span>
+      <span class="badge badge--reward">&#x1F381; Debloque</span>
+      <span class="badge badge--success">&#x2705; Fait</span>
+      <span class="badge badge--error">&#x274C; Erreur</span>
+      <span class="badge badge--info">&#x2139;&#xFE0F; Info</span>
+      <span class="badge badge--warning">&#x26A0;&#xFE0F; Attention</span>
+    </div></div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Chips (filtres)</h3>
+    <div class="sg-d"><div class="sg-row">
+      <button class="chip chip--active">Toutes</button>
+      <button class="chip">Mes taches</button>
+      <button class="chip">Taches de Lea</button>
+    </div></div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Avatars</h3>
+    <div class="sg-d"><div class="sg-row">
+      <div class="avatar avatar--sm avatar--a">L</div>
+      <div class="avatar avatar--md avatar--a">L</div>
+      <div class="avatar avatar--lg avatar--a">L</div>
+      <div class="avatar avatar--sm avatar--b">T</div>
+      <div class="avatar avatar--md avatar--b">T</div>
+      <div class="avatar avatar--lg avatar--b">T</div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══ BARRE D'EQUILIBRE ═══ -->
+<section class="sg-s" id="balance">
+  <h2 class="sg-st">Barre d'equilibre</h2>
+  <p class="sg-sd">Repartition des points. Animation CSS transition sur la largeur.</p>
+  <div class="sg-d"><div class="sg-col" style="max-width:400px">
+    <p class="sg-lbl">Bon equilibre (52/48)</p>
+    <div class="balance-bar"><div class="balance-bar__labels"><span class="balance-bar__label--a">Lea 52%</span><span class="balance-bar__label--b">48% Thomas</span></div><div class="balance-bar__track"><div class="balance-bar__fill" style="width:52%"></div></div></div>
+    <p class="sg-lbl" style="margin-top:var(--space-lg)">Desequilibre (75/25)</p>
+    <div class="balance-bar"><div class="balance-bar__labels"><span class="balance-bar__label--a">Lea 75%</span><span class="balance-bar__label--b">25% Thomas</span></div><div class="balance-bar__track"><div class="balance-bar__fill" style="width:75%"></div></div></div>
+    <p class="sg-lbl" style="margin-top:var(--space-lg)">Parfait (50/50)</p>
+    <div class="balance-bar"><div class="balance-bar__labels"><span class="balance-bar__label--a">Lea 50%</span><span class="balance-bar__label--b">50% Thomas</span></div><div class="balance-bar__track"><div class="balance-bar__fill" style="width:50%"></div></div></div>
+  </div></div>
+</section>
+
+<!-- ═══ TOASTS ═══ -->
+<section class="sg-s" id="toasts">
+  <h2 class="sg-st">Toasts</h2>
+  <p class="sg-sd">Notifications ephemeres en haut de l'ecran. Disparaissent apres 3-4s.</p>
+  <div class="sg-d"><div class="sg-col" style="max-width:400px">
+    <div class="toast toast--success"><span class="toast__icon">&#x2705;</span><span class="toast__message">+12 pts ! Bien joue !</span></div>
+    <div class="toast toast--error"><span class="toast__icon">&#x274C;</span><span class="toast__message">Oups, quelque chose n'a pas fonctionne.</span></div>
+    <div class="toast toast--info"><span class="toast__icon">&#x2139;&#xFE0F;</span><span class="toast__message">Lea te demande un coup de main.</span></div>
+    <div class="toast toast--warning"><span class="toast__icon">&#x26A0;&#xFE0F;</span><span class="toast__message">La serie s'arrete... On reprend ?</span></div>
+  </div></div>
+</section>
+
+<!-- ═══ ALERTES ═══ -->
+<section class="sg-s" id="alerts">
+  <h2 class="sg-st">Alertes</h2>
+  <div class="sg-d"><div class="sg-col" style="max-width:400px">
+    <div class="alert alert--success"><span class="alert__icon">&#x2705;</span><div class="alert__content"><div class="alert__title">Recompense debloquee !</div>Soiree cine est disponible.</div></div>
+    <div class="alert alert--error"><span class="alert__icon">&#x274C;</span><div class="alert__content"><div class="alert__title">Erreur</div>Impossible de sauvegarder.</div></div>
+    <div class="alert alert--warning"><span class="alert__icon">&#x26A0;&#xFE0F;</span><div class="alert__content"><div class="alert__title">Attention</div>L'equilibre penche beaucoup.</div></div>
+    <div class="alert alert--info"><span class="alert__icon">&#x2139;&#xFE0F;</span><div class="alert__content"><div class="alert__title">Info</div>Nouvelle tache ajoutee par Thomas.</div></div>
+  </div></div>
+</section>
+
+<!-- ═══ MASCOTTE ═══ -->
+<section class="sg-s" id="mascot">
+  <h2 class="sg-st">Mascotte</h2>
+  <p class="sg-sd">5 etats d'humeur. MVP = emoji + phrase reactive.</p>
+  <div class="sg-d"><div class="sg-row" style="justify-content:space-around;flex-wrap:wrap">
+    <div class="mascot"><div class="mascot__emoji">&#x1F929;</div><div class="mascot__phrase">Vous etes inarretables !</div></div>
+    <div class="mascot"><div class="mascot__emoji">&#x1F60A;</div><div class="mascot__phrase">Bel equilibre !</div></div>
+    <div class="mascot"><div class="mascot__emoji">&#x1F610;</div><div class="mascot__phrase">On peut faire mieux.</div></div>
+    <div class="mascot"><div class="mascot__emoji">&#x1F61F;</div><div class="mascot__phrase">L'equilibre penche...</div></div>
+    <div class="mascot"><div class="mascot__emoji">&#x1F622;</div><div class="mascot__phrase">Mimi a besoin d'un calin.</div></div>
+  </div></div>
+</section>
+
+<!-- ═══ DIVERS ═══ -->
+<section class="sg-s" id="misc">
+  <h2 class="sg-st">Composants divers</h2>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Section header</h3>
+    <div class="sg-d"><div style="max-width:400px">
+      <div class="section-header"><h2 class="section-header__title">Recompenses</h2><button class="section-header__action">Voir tout</button></div>
+    </div></div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Empty state</h3>
+    <div class="sg-d">
+      <div class="empty-state">
+        <div class="empty-state__icon">&#x1F389;</div>
+        <div class="empty-state__title">Tout est fait !</div>
+        <div class="empty-state__subtitle">Bravo l'equipe, vous avez tout gere aujourd'hui.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">FAB (Floating Action Button)</h3>
+    <div class="sg-d">
+      <p style="font-size:var(--font-size-sm);color:var(--color-text-secondary);margin-bottom:var(--space-md)">Position fixe en bas a droite, au-dessus de la tab bar.</p>
+      <button class="fab" style="position:relative;bottom:auto;right:auto" aria-label="Ajouter une tache">+</button>
+    </div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Progress ring (streaks)</h3>
+    <div class="sg-d"><div class="sg-row">
+      <div class="progress-ring" style="width:64px;height:64px">
+        <svg class="progress-ring__svg" width="64" height="64" viewBox="0 0 64 64">
+          <circle class="progress-ring__track" cx="32" cy="32" r="28"/>
+          <circle class="progress-ring__fill" cx="32" cy="32" r="28" stroke-dasharray="176" stroke-dashoffset="44"/>
+        </svg>
+        <span class="progress-ring__value">5</span>
+      </div>
+      <div style="font-size:var(--font-size-sm);color:var(--color-text-secondary)">5 jours d'affiliee ! Record : 12 jours</div>
+    </div></div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Ombres</h3>
+    <div class="sg-d"><div class="sg-row">
+      <div style="width:80px;height:60px;background:white;border-radius:8px;box-shadow:var(--shadow-xs);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-xs);color:var(--color-text-secondary)">xs</div>
+      <div style="width:80px;height:60px;background:white;border-radius:8px;box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-xs);color:var(--color-text-secondary)">sm</div>
+      <div style="width:80px;height:60px;background:white;border-radius:8px;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-xs);color:var(--color-text-secondary)">md</div>
+      <div style="width:80px;height:60px;background:white;border-radius:8px;box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-xs);color:var(--color-text-secondary)">lg</div>
+      <div style="width:80px;height:60px;background:white;border-radius:8px;box-shadow:var(--shadow-xl);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-xs);color:var(--color-text-secondary)">xl</div>
+    </div></div>
+  </div>
+
+  <div class="sg-ss">
+    <h3 class="sg-sst">Arrondis</h3>
+    <div class="sg-d"><div class="sg-row">
+      <div style="width:60px;height:60px;background:var(--color-primary-ghost);border:1px dashed var(--color-primary);border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-xs)">xs</div>
+      <div style="width:60px;height:60px;background:var(--color-primary-ghost);border:1px dashed var(--color-primary);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-xs)">sm</div>
+      <div style="width:60px;height:60px;background:var(--color-primary-ghost);border:1px dashed var(--color-primary);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-xs)">md</div>
+      <div style="width:60px;height:60px;background:var(--color-primary-ghost);border:1px dashed var(--color-primary);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-xs)">lg</div>
+      <div style="width:60px;height:60px;background:var(--color-primary-ghost);border:1px dashed var(--color-primary);border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-xs)">full</div>
+    </div></div>
+  </div>
+</section>
+
+</div><!-- .sg-c -->
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#2D6A4F">
+
+  <!-- SEO Meta -->
+  <title>MimiTask — L'app couple qui gamifie les tâches ménagères</title>
+  <meta name="description" content="MimiTask transforme les corvées du quotidien en jeu d'équipe pour les couples. Points, récompenses et équilibre : découvrez l'app gratuite qui rend le ménage fun !">
+  <meta name="keywords" content="tâches ménagères couple, app partage corvées, répartition ménage, charge mentale, gamification tâches, application couple ménage">
+  <meta name="author" content="MimiTask">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quentinlooze-sudo.github.io/mimitask/">
+
+  <!-- Open Graph (Facebook, WhatsApp, LinkedIn, Messenger) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://quentinlooze-sudo.github.io/mimitask/">
+  <meta property="og:title" content="MimiTask — Gamifiez vos tâches ménagères en couple">
+  <meta property="og:description" content="Transformez les corvées en jeu d'équipe ! Points, récompenses et équilibre au quotidien. Gratuit, sans inscription.">
+  <meta property="og:image" content="https://quentinlooze-sudo.github.io/mimitask/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="MimiTask — Application de partage des tâches ménagères pour les couples">
+  <meta property="og:locale" content="fr_BE">
+  <meta property="og:site_name" content="MimiTask">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MimiTask — Gamifiez vos tâches ménagères en couple">
+  <meta name="twitter:description" content="Transformez les corvées en jeu d'équipe ! Points, récompenses et équilibre.">
+  <meta name="twitter:image" content="https://quentinlooze-sudo.github.io/mimitask/assets/og-image.png">
+  <meta name="twitter:image:alt" content="MimiTask — App couple pour les tâches ménagères">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "MimiTask",
+    "alternateName": "Mimi Task",
+    "description": "Application gratuite qui gamifie les tâches ménagères pour les couples. Système de points, récompenses et indicateur d'équilibre.",
+    "url": "https://quentinlooze-sudo.github.io/mimitask/",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "Web",
+    "browserRequirements": "Requires JavaScript. Works on modern browsers (Chrome, Safari, Firefox, Edge).",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "MimiTask"
+    },
+    "inLanguage": "fr",
+    "keywords": "tâches ménagères, couple, gamification, répartition corvées, charge mentale",
+    "screenshot": "https://quentinlooze-sudo.github.io/mimitask/assets/og-image.png",
+    "featureList": [
+      "Partage équitable des tâches ménagères",
+      "Système de points et récompenses",
+      "Indicateur d'équilibre du couple",
+      "Mascotte réactive",
+      "Fonctionne hors ligne (PWA)"
+    ]
+  }
+  </script>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+
+  <!-- Google Font Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS (link séparés, pas de @import) -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/onboarding.css">
+  <link rel="stylesheet" href="css/tasks.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/rewards.css">
+  <link rel="stylesheet" href="css/settings.css">
+  <link rel="stylesheet" href="css/polish.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- Header -->
+  <header>
+    <h1 class="visually-hidden">MimiTask</h1>
+  </header>
+
+  <!-- Contenu principal -->
+  <main id="main-content">
+
+    <!-- Écran Tâches (affiché par défaut) -->
+    <section id="screen-tasks" class="screen screen--active" role="tabpanel" aria-labelledby="tab-tasks">
+      <div class="tasks-header">
+        <h2 class="tasks-header__title">Aujourd'hui</h2>
+      </div>
+      <div class="tasks-filters" id="tasks-filters"></div>
+      <div class="task-list" id="task-list"></div>
+    </section>
+
+    <!-- FAB ajout de tâche -->
+    <button class="fab" id="fab-add-task" aria-label="Ajouter une tâche">
+      <svg class="fab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+    </button>
+
+    <!-- Modal ajout de tâche (bottom sheet) -->
+    <div class="modal-overlay" id="add-task-modal" aria-hidden="true">
+      <div class="modal" role="dialog" aria-labelledby="add-task-title">
+        <div class="modal__header">
+          <h3 class="modal__title" id="add-task-title">Nouvelle tâche</h3>
+          <button class="modal__close" id="close-add-task" aria-label="Fermer">&times;</button>
+        </div>
+        <form id="add-task-form" class="modal__form">
+          <div class="form-group">
+            <label class="form-group__label" for="task-name">Nom de la tâche</label>
+            <input class="form-group__input" type="text" id="task-name" placeholder="ex : Vaisselle" required>
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="task-points">Points (1–20)</label>
+            <input class="form-group__input" type="number" id="task-points" min="1" max="20" value="5">
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="task-assign">Qui s'en charge ?</label>
+            <div class="form-group__select-wrapper">
+              <select class="form-group__select" id="task-assign"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="task-recurrence">Répétition</label>
+            <div class="form-group__select-wrapper">
+              <select class="form-group__select" id="task-recurrence">
+                <option value="once">Unique</option>
+                <option value="daily" selected>Chaque jour</option>
+                <option value="weekly">Chaque semaine</option>
+                <option value="monthly">Chaque mois</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn--primary" type="submit">Ajouter</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Écran Dashboard -->
+    <section id="screen-dashboard" class="screen" role="tabpanel" aria-labelledby="tab-dashboard">
+      <div class="screen__header"><h2>Tableau de bord</h2></div>
+      <div class="dashboard">
+        <!-- Barre d'équilibre -->
+        <div class="dashboard__section" id="dashboard-balance">
+          <h3 class="dashboard__section-title">Équilibre du duo</h3>
+          <div class="balance__bar">
+            <div class="balance__fill--a"></div>
+            <div class="balance__fill--b"></div>
+          </div>
+          <div class="balance__labels">
+            <span class="balance__label"><span class="balance__dot balance__dot--a"></span><span data-label-a></span></span>
+            <span class="balance__label"><span data-label-b></span><span class="balance__dot balance__dot--b"></span></span>
+          </div>
+        </div>
+        <!-- Scores -->
+        <div class="dashboard__section" id="dashboard-scores">
+          <h3 class="dashboard__section-title">Points</h3>
+          <div class="scores">
+            <div class="score-card" data-score-a><div class="score-card__value">0</div><div class="score-card__label">—</div></div>
+            <div class="score-card" data-score-b><div class="score-card__value">0</div><div class="score-card__label">—</div></div>
+            <div class="score-card score-card--couple" data-score-couple><div class="score-card__value">0</div><div class="score-card__label">Ensemble</div></div>
+          </div>
+        </div>
+        <!-- Mascotte -->
+        <div class="dashboard__section" id="dashboard-mascot">
+          <div class="mascot">
+            <span class="mascot__emoji">🦖</span>
+            <p class="mascot__speech">Mimi vous observe…</p>
+          </div>
+        </div>
+        <!-- Streaks -->
+        <div class="dashboard__section" id="dashboard-streaks">
+          <h3 class="dashboard__section-title">Séries</h3>
+        </div>
+        <!-- Prochaine récompense -->
+        <div class="dashboard__section" id="dashboard-reward">
+          <h3 class="dashboard__section-title">Prochaine récompense</h3>
+          <div id="dashboard-reward-content"></div>
+        </div>
+        <!-- Stats hebdo -->
+        <div class="dashboard__section" id="dashboard-weekly">
+          <h3 class="dashboard__section-title">Cette semaine</h3>
+          <div class="weekly-stats">
+            <div class="stat-item" data-stat-tasks><div class="stat-item__value">0</div><div class="stat-item__label">Tâches validées</div></div>
+            <div class="stat-item" data-stat-points><div class="stat-item__value">0</div><div class="stat-item__label">Points gagnés</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Écran Paramètres -->
+    <section id="screen-settings" class="screen" role="tabpanel" aria-labelledby="tab-settings">
+      <div class="screen__header"><h2>Paramètres</h2></div>
+
+      <!-- Section : Votre duo -->
+      <div class="settings-section">
+        <h3 class="settings-section__title">Votre duo</h3>
+        <div class="settings-group card">
+          <div class="settings-item" id="settings-couple-names">
+            <div class="settings-item__content">
+              <span class="settings-item__label">Partenaires</span>
+              <span class="settings-item__value" id="settings-names-display">Non configuré</span>
+            </div>
+          </div>
+          <hr class="settings-divider">
+          <div class="settings-item" id="settings-couple-code">
+            <div class="settings-item__content">
+              <span class="settings-item__label">Code couple</span>
+              <span class="settings-item__value" id="settings-code-display">—</span>
+            </div>
+            <button class="btn btn--ghost btn--sm" id="copy-couple-code" aria-label="Copier le code couple">📋 Copier</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section : Récompenses -->
+      <div class="settings-section">
+        <div class="rewards-section">
+          <h3 class="dashboard__section-title">Gérer les récompenses</h3>
+          <div id="rewards-list"></div>
+          <button class="btn btn--secondary" id="add-reward-btn">+ Ajouter une récompense</button>
+        </div>
+      </div>
+
+      <!-- Section : Vos données -->
+      <div class="settings-section">
+        <h3 class="settings-section__title">Vos données</h3>
+        <div class="settings-group card">
+          <button class="settings-item settings-item--clickable" id="btn-export-data">
+            <span class="settings-item__label">📤 Exporter mes données</span>
+          </button>
+          <hr class="settings-divider">
+          <button class="settings-item settings-item--clickable settings-item--danger" id="btn-reset-data">
+            <span class="settings-item__label">🗑️ Tout réinitialiser</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Install PWA -->
+      <div class="settings-section">
+        <button class="btn btn--ghost" id="install-app-btn" hidden onclick="handleInstallClick()">📱 Installer l'app</button>
+      </div>
+
+      <p class="settings-footer">MimiTask v1.0 — Fait avec 💚</p>
+    </section>
+
+    <!-- Modal ajout de récompense (bottom sheet) -->
+    <div class="modal-overlay" id="add-reward-modal" aria-hidden="true">
+      <div class="modal" role="dialog" aria-labelledby="add-reward-title">
+        <div class="modal__header">
+          <h3 class="modal__title" id="add-reward-title">Nouvelle récompense</h3>
+          <button class="modal__close" id="close-add-reward" aria-label="Fermer">&times;</button>
+        </div>
+        <form id="add-reward-form" class="modal__form">
+          <div class="form-group">
+            <label class="form-group__label" for="reward-name">Nom</label>
+            <input class="form-group__input" type="text" id="reward-name" placeholder="ex : Resto en amoureux" required>
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="reward-cost">Coût en points</label>
+            <div class="range-group">
+              <input class="range-group__input" type="range" id="reward-cost" min="50" max="500" step="10" value="100">
+              <output class="range-group__output" id="reward-cost-display">100 pts</output>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-group__label">Icône</label>
+            <div class="emoji-picker" id="reward-emoji-picker">
+              <button type="button" class="emoji-picker__btn emoji-picker__btn--active" data-emoji="🎁">🎁</button>
+              <button type="button" class="emoji-picker__btn" data-emoji="☕">☕</button>
+              <button type="button" class="emoji-picker__btn" data-emoji="🎬">🎬</button>
+              <button type="button" class="emoji-picker__btn" data-emoji="💆">💆</button>
+              <button type="button" class="emoji-picker__btn" data-emoji="🍿">🍿</button>
+              <button type="button" class="emoji-picker__btn" data-emoji="🍽️">🍽️</button>
+              <button type="button" class="emoji-picker__btn" data-emoji="🏖️">🏖️</button>
+              <button type="button" class="emoji-picker__btn" data-emoji="✈️">✈️</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="reward-desc">Description (optionnel)</label>
+            <input class="form-group__input" type="text" id="reward-desc" placeholder="ex : Un bon moment à deux">
+          </div>
+          <button class="btn btn--primary" type="submit">Ajouter</button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Onboarding (5 étapes, plein écran) -->
+  <div id="onboarding" class="onboarding" aria-hidden="true">
+
+    <!-- Progress dots -->
+    <div class="onboarding__progress">
+      <span class="onboarding__dot onboarding__dot--active"></span>
+      <span class="onboarding__dot"></span>
+      <span class="onboarding__dot"></span>
+      <span class="onboarding__dot"></span>
+      <span class="onboarding__dot"></span>
+    </div>
+
+    <!-- Étape 1 — Bienvenue -->
+    <div class="onboarding__step onboarding__step--active" data-step="1">
+      <div class="onboarding__mascot" aria-hidden="true"><img class="mascot__pet" src="assets/mascot/mimi-happy.svg" alt="" width="120" height="120"></div>
+      <h2 class="onboarding__title">Bienvenue sur MimiTask !</h2>
+      <p class="onboarding__subtitle">Transformez vos corvées en jeu d'équipe.</p>
+      <button class="btn btn--primary onboarding__cta" data-action="next">C'est parti !</button>
+    </div>
+
+    <!-- Étape 2 — Noms du couple -->
+    <div class="onboarding__step" data-step="2">
+      <button class="onboarding__back-btn" data-action="back" aria-label="Retour">&#8592;</button>
+      <h2 class="onboarding__title">Qui fait équipe ?</h2>
+      <div class="onboarding__form">
+        <label class="onboarding__label" for="partner-a-name">Prénom du partenaire 1</label>
+        <input type="text" id="partner-a-name" class="onboarding__input" placeholder="ex : Léa" autocomplete="given-name">
+        <label class="onboarding__label" for="partner-b-name">Prénom du partenaire 2</label>
+        <input type="text" id="partner-b-name" class="onboarding__input" placeholder="ex : Léa" autocomplete="given-name">
+      </div>
+      <button class="btn btn--primary onboarding__cta" data-action="next" disabled>Suivant</button>
+    </div>
+
+    <!-- Étape 3 — Sélection des tâches -->
+    <div class="onboarding__step" data-step="3">
+      <button class="onboarding__back-btn" data-action="back" aria-label="Retour">&#8592;</button>
+      <h2 class="onboarding__title">Quelles tâches pour votre duo ?</h2>
+      <p class="onboarding__subtitle">Choisissez dans la liste ou créez les vôtres. Vous pourrez toujours modifier plus tard.</p>
+      <p class="onboarding__counter"><span id="task-count">0</span> tâches sélectionnées</p>
+      <div id="task-grid" class="onboarding__task-grid"></div>
+      <button class="onboarding__add-btn" type="button" id="add-custom-task">+ Ajouter une tâche perso</button>
+      <div id="custom-task-form" class="onboarding__custom-form" hidden>
+        <input type="text" class="onboarding__input" id="custom-task-name" placeholder="Nom de la tâche">
+        <input type="number" class="onboarding__input" id="custom-task-points" placeholder="Pts" min="1" max="20">
+        <button class="btn btn--secondary" type="button" id="confirm-custom-task">OK</button>
+      </div>
+      <button class="btn btn--primary onboarding__cta" data-action="next" disabled>Suivant</button>
+    </div>
+
+    <!-- Étape 4 — Première récompense -->
+    <div class="onboarding__step" data-step="4">
+      <button class="onboarding__back-btn" data-action="back" aria-label="Retour">&#8592;</button>
+      <h2 class="onboarding__title">Votre première récompense !</h2>
+      <p class="onboarding__subtitle">Motivez-vous avec une récompense à débloquer ensemble.</p>
+      <div class="onboarding__form">
+        <input type="text" class="onboarding__input" id="onboarding-reward-name" placeholder="ex : Resto en amoureux">
+        <input type="number" class="onboarding__input" id="onboarding-reward-points" placeholder="ex : 200" min="1">
+      </div>
+      <button class="btn btn--primary onboarding__cta" data-action="next">Créer la récompense</button>
+      <button class="onboarding__skip" data-action="skip">Plus tard</button>
+    </div>
+
+    <!-- Étape 5 — Code couple -->
+    <div class="onboarding__step" data-step="5">
+      <h2 class="onboarding__title">Votre code couple</h2>
+      <p class="onboarding__subtitle">Gardez ce code précieusement. Il servira à synchroniser vos données plus tard.</p>
+      <div class="onboarding__couple-code" id="couple-code"></div>
+      <button class="btn btn--secondary onboarding__copy-btn" type="button" id="copy-code">Copier le code</button>
+      <button class="btn btn--primary onboarding__cta" data-action="finish">Commencer !</button>
+    </div>
+
+  </div>
+
+  <!-- Zone Toasts -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Tab Bar -->
+  <nav class="tab-bar" role="tablist" aria-label="Navigation principale">
+
+    <!-- Onglet Tâches -->
+    <button class="tab-bar__item tab-bar__item--active" role="tab" id="tab-tasks"
+            data-target="screen-tasks" aria-selected="true" aria-controls="screen-tasks">
+      <svg class="tab-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 11l3 3L22 4"/>
+        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+      </svg>
+      <span>Tâches</span>
+    </button>
+
+    <!-- Onglet Dashboard -->
+    <button class="tab-bar__item" role="tab" id="tab-dashboard"
+            data-target="screen-dashboard" aria-selected="false" aria-controls="screen-dashboard">
+      <svg class="tab-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 9H4.5a2.5 2.5 0 010-5C7 4 7 7 7 7"/>
+        <path d="M18 9h1.5a2.5 2.5 0 000-5C17 4 17 7 17 7"/>
+        <path d="M4 22h16"/>
+        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22"/>
+        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22"/>
+        <path d="M18 2H6v7a6 6 0 0012 0V2Z"/>
+      </svg>
+      <span>Dashboard</span>
+    </button>
+
+    <!-- Onglet Paramètres -->
+    <button class="tab-bar__item" role="tab" id="tab-settings"
+            data-target="screen-settings" aria-selected="false" aria-controls="screen-settings">
+      <svg class="tab-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+      </svg>
+      <span>Paramètres</span>
+    </button>
+
+  </nav>
+
+  <!-- JS principal -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

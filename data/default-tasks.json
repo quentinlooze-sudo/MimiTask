@@ -1,0 +1,226 @@
+[
+  {
+    "id": "task_001",
+    "name": "Faire la vaisselle",
+    "category": "cuisine",
+    "points": 8,
+    "recurrence": "daily",
+    "icon": "🍽️"
+  },
+  {
+    "id": "task_002",
+    "name": "Préparer le repas",
+    "category": "cuisine",
+    "points": 12,
+    "recurrence": "daily",
+    "icon": "🍳"
+  },
+  {
+    "id": "task_003",
+    "name": "Ranger la cuisine",
+    "category": "cuisine",
+    "points": 6,
+    "recurrence": "daily",
+    "icon": "🧹"
+  },
+  {
+    "id": "task_004",
+    "name": "Vider le lave-vaisselle",
+    "category": "cuisine",
+    "points": 5,
+    "recurrence": "daily",
+    "icon": "🫧"
+  },
+  {
+    "id": "task_005",
+    "name": "Nettoyer le frigo",
+    "category": "cuisine",
+    "points": 10,
+    "recurrence": "monthly",
+    "icon": "🧊"
+  },
+  {
+    "id": "task_006",
+    "name": "Sortir les poubelles",
+    "category": "cuisine",
+    "points": 4,
+    "recurrence": "daily",
+    "icon": "🗑️"
+  },
+  {
+    "id": "task_007",
+    "name": "Passer l'aspirateur",
+    "category": "menage",
+    "points": 10,
+    "recurrence": "weekly",
+    "icon": "🧹"
+  },
+  {
+    "id": "task_008",
+    "name": "Laver les sols",
+    "category": "menage",
+    "points": 12,
+    "recurrence": "weekly",
+    "icon": "🪣"
+  },
+  {
+    "id": "task_009",
+    "name": "Nettoyer la salle de bain",
+    "category": "menage",
+    "points": 14,
+    "recurrence": "weekly",
+    "icon": "🚿"
+  },
+  {
+    "id": "task_010",
+    "name": "Dépoussiérer",
+    "category": "menage",
+    "points": 8,
+    "recurrence": "weekly",
+    "icon": "✨"
+  },
+  {
+    "id": "task_011",
+    "name": "Nettoyer les vitres",
+    "category": "menage",
+    "points": 12,
+    "recurrence": "monthly",
+    "icon": "🪟"
+  },
+  {
+    "id": "task_012",
+    "name": "Ranger le salon",
+    "category": "menage",
+    "points": 6,
+    "recurrence": "daily",
+    "icon": "🛋️"
+  },
+  {
+    "id": "task_013",
+    "name": "Lancer une machine",
+    "category": "linge",
+    "points": 5,
+    "recurrence": "weekly",
+    "icon": "🫧"
+  },
+  {
+    "id": "task_014",
+    "name": "Étendre le linge",
+    "category": "linge",
+    "points": 7,
+    "recurrence": "weekly",
+    "icon": "👕"
+  },
+  {
+    "id": "task_015",
+    "name": "Plier et ranger le linge",
+    "category": "linge",
+    "points": 10,
+    "recurrence": "weekly",
+    "icon": "🧺"
+  },
+  {
+    "id": "task_016",
+    "name": "Repasser",
+    "category": "linge",
+    "points": 15,
+    "recurrence": "weekly",
+    "icon": "♨️"
+  },
+  {
+    "id": "task_017",
+    "name": "Faire les courses",
+    "category": "courses",
+    "points": 15,
+    "recurrence": "weekly",
+    "icon": "🛒"
+  },
+  {
+    "id": "task_018",
+    "name": "Préparer la liste de courses",
+    "category": "courses",
+    "points": 5,
+    "recurrence": "weekly",
+    "icon": "📝"
+  },
+  {
+    "id": "task_019",
+    "name": "Aller à la pharmacie",
+    "category": "courses",
+    "points": 8,
+    "recurrence": "monthly",
+    "icon": "💊"
+  },
+  {
+    "id": "task_020",
+    "name": "Poster un colis / courrier",
+    "category": "courses",
+    "points": 6,
+    "recurrence": "monthly",
+    "icon": "📦"
+  },
+  {
+    "id": "task_021",
+    "name": "Gérer le courrier",
+    "category": "administratif",
+    "points": 6,
+    "recurrence": "weekly",
+    "icon": "📬"
+  },
+  {
+    "id": "task_022",
+    "name": "Payer les factures",
+    "category": "administratif",
+    "points": 8,
+    "recurrence": "monthly",
+    "icon": "💳"
+  },
+  {
+    "id": "task_023",
+    "name": "Prendre un rendez-vous (médecin, etc.)",
+    "category": "administratif",
+    "points": 7,
+    "recurrence": "monthly",
+    "icon": "📅"
+  },
+  {
+    "id": "task_024",
+    "name": "Arroser les plantes",
+    "category": "divers",
+    "points": 3,
+    "recurrence": "weekly",
+    "icon": "🌱"
+  },
+  {
+    "id": "task_025",
+    "name": "Sortir le chien / chat",
+    "category": "divers",
+    "points": 5,
+    "recurrence": "daily",
+    "icon": "🐕"
+  },
+  {
+    "id": "task_026",
+    "name": "Changer les draps",
+    "category": "divers",
+    "points": 10,
+    "recurrence": "weekly",
+    "icon": "🛏️"
+  },
+  {
+    "id": "task_027",
+    "name": "Descendre les poubelles de tri",
+    "category": "divers",
+    "points": 6,
+    "recurrence": "weekly",
+    "icon": "♻️"
+  },
+  {
+    "id": "task_028",
+    "name": "Bricolage / petite réparation",
+    "category": "divers",
+    "points": 15,
+    "recurrence": "monthly",
+    "icon": "🔧"
+  }
+]

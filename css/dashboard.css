@@ -1,0 +1,150 @@
+/* ==============================================
+   MimiTask — Écran Dashboard
+   Barre équilibre, scores, mascotte, streaks, récompense, stats
+   ============================================== */
+
+/* --- Layout dashboard --- */
+.dashboard {
+  display: flex; flex-direction: column; gap: var(--space-lg);
+  padding: var(--space-md) var(--space-md) var(--space-2xl);
+}
+.dashboard__section { display: flex; flex-direction: column; gap: var(--space-sm); }
+.dashboard__section-title {
+  font-size: var(--font-size-sm); font-weight: 600;
+  text-transform: uppercase; color: var(--color-text-secondary); letter-spacing: 0.5px;
+}
+
+/* --- Barre d'équilibre --- */
+.balance { display: flex; flex-direction: column; gap: var(--space-sm); }
+.balance__bar {
+  height: 24px; border-radius: var(--radius-full);
+  overflow: hidden; display: flex; position: relative;
+  background-color: var(--color-border);
+}
+.balance__fill--a {
+  background-color: var(--color-partner-a);
+  transition: width 500ms ease; height: 100%;
+}
+.balance__fill--b {
+  background-color: var(--color-partner-b);
+  transition: width 500ms ease; height: 100%;
+}
+.balance__labels {
+  display: flex; justify-content: space-between;
+  font-size: var(--font-size-sm);
+}
+.balance__label { display: flex; align-items: center; gap: var(--space-xs); }
+.balance__dot {
+  width: 12px; height: 12px; border-radius: var(--radius-full); flex-shrink: 0;
+}
+.balance__dot--a { background-color: var(--color-partner-a); }
+.balance__dot--b { background-color: var(--color-partner-b); }
+
+/* --- Scores --- */
+.scores { display: flex; gap: var(--space-md); }
+.score-card {
+  flex: 1; text-align: center; padding: var(--space-md);
+  background-color: var(--color-surface); box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+}
+.score-card__value { font-size: var(--font-size-xl); font-weight: 700; }
+.score-card__label { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.score-card--couple {
+  border: 2px solid var(--color-primary-light);
+  background-color: rgba(82, 183, 136, 0.05);
+}
+
+/* --- Mascotte --- */
+.mascot {
+  display: flex; flex-direction: column; align-items: center;
+  gap: var(--space-sm); padding: var(--space-md);
+  background-color: var(--color-surface); box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+}
+.mascot__emoji { display: flex; align-items: center; justify-content: center; }
+.mascot__pet { width: 120px; height: auto; }
+
+/* Animations par humeur */
+.mascot__pet--excited {
+  animation: dino-bounce 600ms ease infinite; transform-origin: center bottom;
+}
+.mascot__pet--happy {
+  animation: dino-float 2.5s ease-in-out infinite;
+}
+.mascot__pet--neutral {
+  animation: dino-breathe 3s ease-in-out infinite; transform-origin: center bottom;
+}
+.mascot__pet--worried {
+  animation: dino-tremble 200ms ease-in-out infinite;
+}
+.mascot__pet--sad {
+  animation: dino-droop 3s ease-in-out infinite; transform-origin: center bottom;
+}
+
+@keyframes dino-bounce {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-8px); }
+  80% { transform: translateY(2px); }
+}
+@keyframes dino-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes dino-breathe {
+  0%, 100% { transform: scaleY(1) scaleX(1); }
+  50% { transform: scaleY(1.04) scaleX(0.97); }
+}
+@keyframes dino-tremble {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+@keyframes dino-droop {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(4px) rotate(-3deg); }
+}
+.mascot__speech {
+  font-size: var(--font-size-sm); text-align: center;
+  color: var(--color-text-secondary); font-style: italic;
+}
+
+/* --- Streaks --- */
+.streak {
+  display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md);
+  background-color: var(--color-surface); box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+}
+.streak__icon { font-size: var(--font-size-xl); color: var(--color-streak); }
+.streak__info { display: flex; flex-direction: column; }
+.streak__count { font-weight: 700; }
+.streak__record { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+
+/* --- Prochaine récompense --- */
+.next-reward {
+  display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md);
+  background-color: var(--color-surface); box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+}
+.next-reward__icon { font-size: var(--font-size-xl); flex-shrink: 0; }
+.next-reward__info { display: flex; flex-direction: column; flex: 1; gap: var(--space-xs); }
+.next-reward__name { font-weight: 600; }
+.next-reward__remaining { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.next-reward__progress {
+  height: 8px; border-radius: var(--radius-full);
+  background-color: var(--color-border); overflow: hidden;
+}
+.next-reward__progress-fill {
+  height: 100%; background-color: var(--color-reward);
+  border-radius: var(--radius-full); transition: width 500ms ease;
+}
+
+/* --- Stats hebdomadaires --- */
+.weekly-stats { display: flex; gap: var(--space-md); }
+.stat-item {
+  flex: 1; text-align: center; padding: var(--space-md);
+  background-color: var(--color-surface); box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+}
+.stat-item__value { font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary); }
+.stat-item__label { font-size: var(--font-size-xs); color: var(--color-text-secondary); }

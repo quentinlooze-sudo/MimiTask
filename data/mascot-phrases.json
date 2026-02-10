@@ -1,0 +1,55 @@
+{
+  "mascotName": "Mimi",
+  "states": {
+    "excited": {
+      "condition": "équilibre > 45/55 ET streak > 5 jours",
+      "emoji": "🤩",
+      "phrases": [
+        "Vous êtes inarrêtables ! Mimi est aux anges !",
+        "Équilibre parfait ET un streak au top ? Chapeau !",
+        "Mimi fait la danse de la victoire !",
+        "Vous gérez comme des pros. Fier de mon équipe !"
+      ]
+    },
+    "happy": {
+      "condition": "équilibre > 40/60",
+      "emoji": "😊",
+      "phrases": [
+        "Bel équilibre ! Continuez comme ça !",
+        "Mimi est content, vous assurez.",
+        "Les tâches avancent bien, bravo le duo !",
+        "Tout roule. Mimi approuve !"
+      ]
+    },
+    "neutral": {
+      "condition": "équilibre entre 30% et 40%",
+      "emoji": "😐",
+      "phrases": [
+        "Pas mal, mais on peut faire mieux ensemble.",
+        "L'équilibre oscille un peu. Un petit effort ?",
+        "Mimi observe… Il attend de voir la suite.",
+        "Ça va, mais Mimi a connu mieux."
+      ]
+    },
+    "worried": {
+      "condition": "équilibre entre 20% et 30%",
+      "emoji": "😟",
+      "phrases": [
+        "Hmm, l'équilibre penche un peu. On rééquilibre ?",
+        "Mimi se fait du souci pour le duo…",
+        "Une petite tâche pour rééquilibrer ?",
+        "Mimi lève un sourcil… tout va bien ?"
+      ]
+    },
+    "sad": {
+      "condition": "équilibre < 20%",
+      "emoji": "😢",
+      "phrases": [
+        "L'équilibre est déséquilibré… Mimi a besoin d'un câlin.",
+        "On dirait que quelqu'un porte tout. Un coup de main ?",
+        "Mimi est triste. Validez une tâche pour lui redonner le sourire.",
+        "À deux c'est mieux… Mimi compte sur vous."
+      ]
+    }
+  }
+}

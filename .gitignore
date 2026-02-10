@@ -1,0 +1,19 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Éditeur
+.vscode/
+.idea/
+*.swp
+
+# Environnement
+.env
+.env.local
+.env.production
+
+# Node (si tu utilises des outils locaux)
+node_modules/
+
+# Divers
+*.log

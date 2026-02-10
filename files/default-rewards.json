@@ -1,0 +1,72 @@
+[
+  {
+    "id": "reward_001",
+    "name": "Café à deux",
+    "pointsCost": 50,
+    "description": "Un petit café en terrasse bien mérité.",
+    "icon": "☕"
+  },
+  {
+    "id": "reward_002",
+    "name": "Grasse matinée",
+    "pointsCost": 80,
+    "description": "L'autre gère le petit-déj pendant que tu dors.",
+    "icon": "😴"
+  },
+  {
+    "id": "reward_003",
+    "name": "Choix du film",
+    "pointsCost": 100,
+    "description": "Ce soir, c'est toi qui choisis. Sans négociation.",
+    "icon": "🎬"
+  },
+  {
+    "id": "reward_004",
+    "name": "Massage",
+    "pointsCost": 120,
+    "description": "20 minutes de massage, les yeux fermés.",
+    "icon": "💆"
+  },
+  {
+    "id": "reward_005",
+    "name": "Soirée ciné",
+    "pointsCost": 150,
+    "description": "Popcorn compris, bien sûr.",
+    "icon": "🍿"
+  },
+  {
+    "id": "reward_006",
+    "name": "Défi culinaire",
+    "pointsCost": 100,
+    "description": "L'autre prépare le plat de ton choix, même s'il ne sait pas le faire.",
+    "icon": "👨‍🍳"
+  },
+  {
+    "id": "reward_007",
+    "name": "Restaurant en amoureux",
+    "pointsCost": 200,
+    "description": "Resto au choix du gagnant.",
+    "icon": "🍽️"
+  },
+  {
+    "id": "reward_008",
+    "name": "Journée sans corvées",
+    "pointsCost": 250,
+    "description": "24h off. L'autre gère tout.",
+    "icon": "🏖️"
+  },
+  {
+    "id": "reward_009",
+    "name": "Cadeau au choix",
+    "pointsCost": 300,
+    "description": "Choisis-toi un petit cadeau, tu l'as mérité.",
+    "icon": "🎁"
+  },
+  {
+    "id": "reward_010",
+    "name": "Week-end surprise",
+    "pointsCost": 400,
+    "description": "Le partenaire organise un week-end. Destination surprise.",
+    "icon": "✈️"
+  }
+]

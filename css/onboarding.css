@@ -1,0 +1,135 @@
+/* ==============================================
+   MimiTask — Onboarding (flow 5 étapes)
+   ============================================== */
+
+/* Conteneur plein écran */
+.onboarding {
+  position: fixed; inset: 0;
+  background-color: var(--color-surface);
+  z-index: 250; display: none; flex-direction: column;
+}
+.onboarding--active { display: flex; }
+
+/* --- Étapes --- */
+.onboarding__step {
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: var(--space-xl) var(--space-lg);
+  min-height: 100dvh; position: relative; overflow-y: auto;
+}
+.onboarding__step--active {
+  display: flex;
+  animation: onboarding-enter var(--transition-normal) forwards;
+}
+@keyframes onboarding-enter {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* --- Progress dots --- */
+.onboarding__progress {
+  position: fixed; top: var(--space-lg); left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: var(--space-sm); z-index: 251;
+}
+.onboarding__dot {
+  width: 8px; height: 8px; border-radius: var(--radius-full);
+  background-color: var(--color-border);
+  transition: background-color var(--transition-fast);
+}
+.onboarding__dot--active { background-color: var(--color-primary); }
+
+/* --- Titres et textes --- */
+.onboarding__mascot { font-size: 120px; line-height: 1; margin-bottom: var(--space-lg); }
+.onboarding__title {
+  font-size: var(--font-size-xl); font-weight: 700;
+  text-align: center; margin-bottom: var(--space-md);
+}
+.onboarding__subtitle {
+  font-size: var(--font-size-base); color: var(--color-text-secondary);
+  text-align: center; margin-bottom: var(--space-lg); max-width: 320px;
+}
+
+/* --- Bouton retour --- */
+.onboarding__back-btn {
+  position: absolute; top: var(--space-md); left: var(--space-md);
+  background: none; border: none; color: var(--color-text-secondary);
+  font-size: var(--font-size-lg); cursor: pointer;
+  min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* --- Formulaire --- */
+.onboarding__form {
+  width: 100%; max-width: 320px;
+  display: flex; flex-direction: column;
+  gap: var(--space-md); margin-bottom: var(--space-lg);
+}
+.onboarding__label { font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text-secondary); }
+.onboarding__input {
+  width: 100%; padding: var(--space-md);
+  border: 1px solid var(--color-border); border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  transition: border-color var(--transition-fast);
+}
+.onboarding__input:focus { border-color: var(--color-primary); outline: none; }
+.onboarding__input--error {
+  border-color: var(--color-error);
+  animation: shake var(--transition-normal) ease;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-5px); }
+  75%      { transform: translateX(5px); }
+}
+
+/* --- Grille de tâches --- */
+.onboarding__counter { font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: var(--space-sm); }
+.onboarding__task-grid {
+  width: 100%; max-width: 360px; max-height: 40vh;
+  overflow-y: auto; display: flex; flex-wrap: wrap;
+  gap: var(--space-sm); margin-bottom: var(--space-md); padding: var(--space-xs);
+}
+.onboarding__task-chip {
+  display: flex; align-items: center; gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border); border-radius: var(--radius-md);
+  font-size: var(--font-size-sm); cursor: pointer; min-height: 44px;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+.onboarding__task-chip--selected {
+  border-color: var(--color-primary);
+  background-color: rgba(82, 183, 136, 0.1);
+}
+.onboarding__task-chip-points { color: var(--color-text-secondary); font-size: var(--font-size-xs); }
+
+/* --- Formulaire tâche perso --- */
+.onboarding__custom-form {
+  width: 100%; max-width: 360px;
+  display: flex; gap: var(--space-sm); margin-bottom: var(--space-md);
+}
+.onboarding__custom-form .onboarding__input { flex: 1; }
+.onboarding__custom-form .onboarding__input:last-of-type { max-width: 80px; }
+
+/* --- Code couple --- */
+.onboarding__couple-code {
+  font-size: var(--font-size-2xl); font-weight: 700;
+  letter-spacing: 4px; text-align: center;
+  background-color: var(--color-bg);
+  padding: var(--space-lg) var(--space-xl);
+  border-radius: var(--radius-md); margin-bottom: var(--space-lg);
+}
+
+/* --- CTA et boutons --- */
+.onboarding__cta { width: 100%; max-width: 320px; margin-top: var(--space-sm); }
+.onboarding__cta:disabled { opacity: 0.5; cursor: not-allowed; }
+.onboarding__add-btn {
+  margin-bottom: var(--space-sm); background: none; border: none;
+  color: var(--color-primary); font-weight: 600; cursor: pointer; min-height: 44px;
+}
+.onboarding__skip {
+  margin-top: var(--space-sm); background: none; border: none;
+  color: var(--color-text-secondary); cursor: pointer; min-height: 44px;
+}
+.onboarding__copy-btn { margin-bottom: var(--space-sm); max-width: 320px; width: 100%; }

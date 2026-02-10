@@ -1,0 +1,80 @@
+/* ==============================================
+   MimiTask — Polish
+   Responsive, animations, a11y, edge cases
+   ============================================== */
+
+/* --- Responsive --- */
+
+/* Desktop : contenu centré, largeur mobile */
+@media (min-width: 768px) {
+  main { max-width: 540px; margin: 0 auto; }
+  .tab-bar { max-width: 540px; left: 50%; transform: translateX(-50%); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+  .toast-container { max-width: 540px; left: 50%; transform: translateX(-50%); right: auto; width: 100%; padding: 0 var(--space-md); }
+  .mascot__pet { width: 150px; }
+  .dashboard { padding: var(--space-lg) var(--space-lg) var(--space-2xl); }
+}
+@media (min-width: 1024px) {
+  main { max-width: 480px; }
+  .tab-bar { max-width: 480px; }
+  .toast-container { max-width: 480px; }
+}
+
+/* --- Boutons hover/active --- */
+.btn--primary:active { opacity: 0.85; }
+.btn--secondary:active { background-color: rgba(45, 106, 79, 0.08); }
+.btn--ghost:active { background-color: rgba(0, 0, 0, 0.05); }
+.tab-bar__item:active { transform: scale(0.92); }
+
+@media (hover: hover) {
+  .btn--primary:hover { opacity: 0.9; }
+  .btn--secondary:hover { background-color: rgba(45, 106, 79, 0.05); }
+  .btn--ghost:hover { color: var(--color-text); }
+  .task-card__check:hover { border-color: var(--color-primary-light); }
+  .task-card__delegate:hover { color: var(--color-primary); }
+  .reward-card__delete:hover { color: var(--color-error); }
+}
+
+/* --- Check animation (validation tâche) --- */
+@keyframes check-bounce {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+.task-card__check--done {
+  animation: check-bounce 400ms ease;
+}
+
+/* --- Confetti CSS (validation + reward) --- */
+@keyframes confetti-fall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(40px) rotate(360deg); opacity: 0; }
+}
+.task-card--completing::after {
+  content: ''; display: block; position: absolute; top: 50%; left: 20%;
+  width: 6px; height: 6px; border-radius: var(--radius-full);
+  background-color: var(--color-primary-light);
+  animation: confetti-fall 600ms ease forwards;
+  pointer-events: none;
+}
+
+/* --- Toast info type --- */
+.toast--info { border-left: 4px solid var(--color-secondary); }
+
+/* --- Noms longs : ellipsis --- */
+.task-card__name,
+.reward-card__name,
+.score-card__label,
+.balance__label,
+.streak__count {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.task-card__name { max-width: 160px; }
+.reward-card__name { max-width: 180px; }
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

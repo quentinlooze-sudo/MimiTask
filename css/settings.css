@@ -1,0 +1,31 @@
+/* ==============================================
+   MimiTask — Écran Paramètres
+   Sections, items, export, reset
+   ============================================== */
+
+.settings-section { padding: var(--space-md); }
+.settings-section__title {
+  font-size: var(--font-size-xs); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--color-text-secondary); margin-bottom: var(--space-sm);
+}
+.settings-group { padding: 0; overflow: hidden; }
+.settings-divider { border: none; border-top: 1px solid var(--color-border); margin: 0; }
+.settings-item {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-md); padding: var(--space-md); width: 100%; text-align: left;
+}
+.settings-item--clickable {
+  cursor: pointer; background: none; border: none; font: inherit;
+  transition: background-color 200ms ease;
+}
+.settings-item--clickable:hover { background-color: rgba(0, 0, 0, 0.04); }
+.settings-item--clickable:active { background-color: rgba(0, 0, 0, 0.08); }
+.settings-item__content { display: flex; flex-direction: column; gap: 2px; }
+.settings-item__label { font-weight: 500; }
+.settings-item__value { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.settings-item--danger .settings-item__label { color: var(--color-error, #DC2626); }
+.settings-footer {
+  text-align: center; font-size: var(--font-size-xs);
+  color: var(--color-text-secondary); padding: var(--space-lg) 0 var(--space-2xl);
+}

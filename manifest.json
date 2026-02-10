@@ -1,0 +1,19 @@
+{
+  "name": "MimiTask — Tâches ménagères en couple",
+  "short_name": "MimiTask",
+  "description": "Transformez vos corvées en jeu d'équipe. Points, récompenses et équilibre pour les couples.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAFAFA",
+  "theme_color": "#2D6A4F",
+  "lang": "fr",
+  "categories": ["lifestyle", "productivity"],
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

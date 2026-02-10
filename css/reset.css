@@ -1,0 +1,47 @@
+/* ==============================================
+   MimiTask — Reset minimal
+   ============================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+/* Images et SVG responsives */
+img,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* Boutons et inputs héritent de la typo */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Listes sans puces */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Liens neutres */
+a {
+  text-decoration: none;
+  color: inherit;
+}

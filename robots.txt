@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://quentinlooze-sudo.github.io/mimitask/sitemap.xml

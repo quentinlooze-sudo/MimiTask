@@ -1,0 +1,187 @@
+/* ==============================================
+   MimiTask — Composants de base (BEM)
+   Tab bar, boutons, toasts, modals, cartes, écrans
+   ============================================== */
+
+/* --- Tab Bar --- */
+
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: var(--tab-bar-height);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  z-index: var(--z-tab-bar);
+}
+
+.tab-bar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-width: 44px;
+  min-height: 44px;
+  padding: var(--space-sm);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.tab-bar__item--active {
+  color: var(--color-primary);
+}
+
+.tab-bar__icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* --- Boutons --- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  min-height: 44px;
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+.btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border-radius: var(--radius-full);
+}
+
+.btn--secondary {
+  background-color: transparent;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  border-radius: var(--radius-md);
+}
+
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+}
+
+.btn--icon {
+  padding: var(--space-sm);
+  border-radius: var(--radius-full);
+}
+
+/* --- Toasts --- */
+
+.toast-container {
+  position: fixed;
+  bottom: calc(var(--tab-bar-height) + var(--space-md) + env(safe-area-inset-bottom, 0px));
+  left: var(--space-md);
+  right: var(--space-md);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  pointer-events: none;
+}
+
+.toast {
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: transform var(--transition-normal),
+              opacity var(--transition-normal);
+  pointer-events: auto;
+}
+
+.toast--visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toast--success {
+  border-left: 4px solid var(--color-primary-light);
+}
+
+.toast--error {
+  border-left: 4px solid var(--color-error);
+}
+
+/* --- Écrans --- */
+
+.screen {
+  display: none;
+}
+
+.screen--active {
+  display: block;
+}
+
+/* --- Modal / Bottom Sheet --- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: var(--z-modal);
+  display: none;
+}
+
+.modal-overlay--active {
+  display: flex;
+  align-items: flex-end;
+}
+
+.modal {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--space-lg);
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slide-up var(--transition-normal) forwards;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* --- En-tête d'écran --- */
+
+.screen__header {
+  padding: var(--space-md);
+}
+
+/* --- Carte --- */
+
+.card {
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}

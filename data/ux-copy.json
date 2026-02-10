@@ -1,0 +1,148 @@
+{
+  "app": {
+    "name": "MimiTask",
+    "tagline": "Transformez vos corvées en jeu d'équipe.",
+    "mascotName": "Mimi"
+  },
+  "tabBar": {
+    "tasks": "Tâches",
+    "dashboard": "Dashboard",
+    "settings": "Paramètres"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Bienvenue sur MimiTask !",
+      "subtitle": "Transformez vos corvées en jeu d'équipe.",
+      "cta": "C'est parti !"
+    },
+    "step2": {
+      "title": "Qui fait équipe ?",
+      "labelPartnerA": "Prénom du partenaire 1",
+      "labelPartnerB": "Prénom du partenaire 2",
+      "placeholder": "ex : Léa",
+      "cta": "Suivant"
+    },
+    "step3": {
+      "title": "Quelles tâches pour votre duo ?",
+      "subtitle": "Choisissez dans la liste ou créez les vôtres. Vous pourrez toujours modifier plus tard.",
+      "ctaAdd": "+ Ajouter une tâche perso",
+      "cta": "Suivant"
+    },
+    "step4": {
+      "title": "Votre première récompense !",
+      "subtitle": "Motivez-vous avec une récompense à débloquer ensemble.",
+      "placeholderName": "ex : Resto en amoureux",
+      "placeholderPoints": "ex : 200",
+      "cta": "Créer la récompense",
+      "skip": "Plus tard"
+    },
+    "step5": {
+      "title": "Votre code couple",
+      "subtitle": "Gardez ce code précieusement. Il servira à synchroniser vos données plus tard.",
+      "ctaCopy": "Copier le code",
+      "cta": "Commencer !"
+    }
+  },
+  "tasks": {
+    "headerTitle": "Aujourd'hui",
+    "filters": {
+      "all": "Toutes",
+      "mine": "Mes tâches",
+      "partner": "Tâches de {partnerName}"
+    },
+    "emptyState": {
+      "noTasks": {
+        "title": "Rien à faire !",
+        "subtitle": "Profitez-en… ou ajoutez une tâche pour marquer des points.",
+        "cta": "+ Ajouter une tâche"
+      },
+      "allDone": {
+        "title": "Tout est fait ! 🎉",
+        "subtitle": "Bravo l'équipe, vous avez tout géré aujourd'hui."
+      }
+    },
+    "delegation": {
+      "button": "Passe-tour",
+      "confirm": "Demander à {partnerName} de s'en charger ?",
+      "sent": "Demande envoyée à {partnerName} !",
+      "received": "{partnerName} te demande un coup de main pour « {taskName} ».",
+      "accept": "J'accepte",
+      "decline": "Pas cette fois",
+      "accepted": "C'est noté ! La tâche est à toi.",
+      "declined": "OK, la tâche reste chez {originalPartner}."
+    },
+    "addModal": {
+      "title": "Nouvelle tâche",
+      "labelName": "Nom de la tâche",
+      "labelPoints": "Points (1–20)",
+      "labelAssign": "Qui s'en charge ?",
+      "optionRandom": "Aléatoire",
+      "labelRecurrence": "Répétition",
+      "recurrenceOptions": {
+        "once": "Unique",
+        "daily": "Chaque jour",
+        "weekly": "Chaque semaine",
+        "monthly": "Chaque mois"
+      },
+      "cta": "Ajouter"
+    }
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "balance": {
+      "label": "Équilibre du duo",
+      "format": "{partnerA} {percentA}% — {percentB}% {partnerB}"
+    },
+    "scores": {
+      "individual": "{name} : {points} pts",
+      "couple": "Ensemble : {points} pts"
+    },
+    "streaks": {
+      "active": "{count} jours d'affilée !",
+      "inactive": "Pas encore de série. Validez une tâche pour commencer !",
+      "record": "Record : {count} jours"
+    },
+    "rewards": {
+      "sectionTitle": "Récompenses",
+      "next": "Prochaine récompense : {name} — encore {remaining} pts",
+      "unlocked": "🎉 Récompense débloquée : {name} ! Profitez-en !",
+      "cta": "Voir toutes les récompenses"
+    },
+    "stats": {
+      "weekTasks": "{count} tâches validées cette semaine",
+      "monthPoints": "{count} points gagnés ce mois"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "sections": {
+      "couple": "Votre duo",
+      "tasks": "Gérer les tâches",
+      "rewards": "Gérer les récompenses",
+      "data": "Vos données"
+    },
+    "coupleCode": {
+      "label": "Votre code couple : {code}",
+      "info": "Ce code servira à synchroniser vos données entre appareils dans une future mise à jour."
+    },
+    "export": "Exporter mes données",
+    "reset": "Tout réinitialiser",
+    "resetConfirm": "Attention, cette action est irréversible. Toutes vos données seront supprimées.",
+    "resetYes": "Oui, tout supprimer",
+    "resetNo": "Annuler"
+  },
+  "toasts": {
+    "taskValidated": "+{points} pts ! Bien joué !",
+    "streakActive": "{count} jours d'affilée ! Continue comme ça !",
+    "streakLost": "La série s'arrête… On reprend ?",
+    "rewardUnlocked": "🎉 {name} débloqué ! Vous l'avez bien mérité.",
+    "delegationSent": "Demande envoyée à {partnerName}.",
+    "delegationAccepted": "{partnerName} accepte ! C'est noté.",
+    "delegationDeclined": "{partnerName} ne peut pas cette fois.",
+    "taskAdded": "Tâche ajoutée !",
+    "taskDeleted": "Tâche retirée.",
+    "rewardCreated": "Nouvelle récompense en jeu !",
+    "dataExported": "Données exportées avec succès.",
+    "error": "Oups, quelque chose n'a pas fonctionné. Réessayez."
+  }
+}
