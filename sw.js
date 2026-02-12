@@ -3,7 +3,7 @@
    Cache-first assets, network-first données
    ============================================== */
 
-const CACHE_NAME = 'mimitask-v6';
+const CACHE_NAME = 'mimitask-v7';
 
 const STATIC_ASSETS = [
   './',
