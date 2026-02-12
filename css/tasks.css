@@ -54,8 +54,8 @@
 /* --- Carte tache --- */
 .task-card {
   position: relative; display: flex; align-items: center; gap: var(--space-md);
-  background-color: rgba(255, 255, 255, 0.08); box-shadow: none;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.12); box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-md); padding: var(--space-md); overflow: hidden;
   transition: transform var(--transition-fast), opacity var(--transition-fast);
 }

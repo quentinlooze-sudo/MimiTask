@@ -258,7 +258,7 @@
   padding: 20px 20px 12px;
   position: sticky;
   top: 0;
-  background: rgba(240, 247, 244, 0.85);
+  background: rgba(27, 67, 50, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 30;
