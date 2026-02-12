@@ -1,16 +1,17 @@
 /* ==============================================
-   MimiTask — Onboarding (flow 5 étapes)
+   MimiTask — Onboarding (flow 5 etapes)
+   Fond vert degrade, theme blanc inverse
    ============================================== */
 
-/* Conteneur plein écran — fond gradienté */
+/* Conteneur plein ecran — fond gradiete */
 .onboarding {
   position: fixed; inset: 0;
-  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-surface) 60%, var(--color-bg-warm) 100%);
+  background: var(--gradient-onboarding);
   z-index: 250; display: none; flex-direction: column;
 }
 .onboarding--active { display: flex; }
 
-/* --- Étapes --- */
+/* --- Etapes --- */
 .onboarding__step {
   display: none; flex-direction: column;
   align-items: center; justify-content: center;
@@ -27,72 +28,69 @@
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* --- Progress dots (pilule pour l'actif) --- */
+/* --- Progress dots (pilules) --- */
 .onboarding__progress {
   position: fixed; top: var(--space-lg); left: 50%;
   transform: translateX(-50%);
   display: flex; gap: var(--space-sm); z-index: 251;
 }
 .onboarding__dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  background-color: var(--color-border);
-  transition: all 0.3s ease;
+  width: 8px; height: 8px; border-radius: var(--radius-full);
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: background-color var(--transition-fast), width var(--transition-fast);
 }
 .onboarding__dot--active {
-  background-color: var(--color-primary);
-  width: 28px;
-  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 24px;
 }
 
-/* --- Titres et textes --- */
-.onboarding__mascot { font-size: 72px; line-height: 1; margin-bottom: 20px; }
+/* --- Titres et textes (blancs) --- */
+.onboarding__mascot { font-size: 120px; line-height: 1; margin-bottom: var(--space-lg); }
 .onboarding__title {
-  font-family: var(--font-family-heading);
-  font-size: 26px;
-  font-weight: var(--font-weight-extrabold);
-  color: var(--color-text);
-  text-align: center; margin-bottom: var(--space-sm);
+  font-family: var(--font-family-accent); font-size: 26px; font-weight: 700;
+  color: white; text-align: center; margin-bottom: var(--space-md);
 }
 .onboarding__subtitle {
-  font-size: 15px; color: var(--color-text-secondary);
-  text-align: center; margin-bottom: 28px; max-width: 300px;
-  line-height: 1.5;
+  font-size: var(--font-size-base); color: rgba(255, 255, 255, 0.8);
+  text-align: center; margin-bottom: var(--space-lg); max-width: 320px;
 }
 
 /* --- Bouton retour --- */
 .onboarding__back-btn {
   position: absolute; top: var(--space-md); left: var(--space-md);
-  background: none; border: none; color: var(--color-text-secondary);
-  font-size: var(--font-size-xl); cursor: pointer;
+  background: none; border: none; color: rgba(255, 255, 255, 0.7);
+  font-size: var(--font-size-lg); cursor: pointer;
   min-width: 44px; min-height: 44px;
   display: flex; align-items: center; justify-content: center;
   padding: var(--space-sm); z-index: 10;
 }
 
-/* --- Formulaire --- */
+/* --- Formulaire (inputs transparents) --- */
 .onboarding__form {
   width: 100%; max-width: 280px;
   display: flex; flex-direction: column;
   gap: var(--space-md); margin-bottom: var(--space-lg);
 }
 .onboarding__label {
-  font-size: 13px;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-secondary);
-  text-align: left; width: 100%; max-width: 280px; margin-bottom: 6px;
+  font-family: var(--font-family-accent);
+  font-size: var(--font-size-sm); font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
 }
 .onboarding__input {
-  width: 100%; max-width: 280px; padding: 14px var(--space-md);
-  border: 2px solid var(--color-border); border-radius: var(--radius-sm);
-  font-size: var(--font-size-base); font-family: var(--font-family);
-  color: var(--color-text); background: var(--color-surface);
-  transition: border-color var(--transition-fast);
-  margin-bottom: var(--space-sm);
+  width: 100%; padding: var(--space-md);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.3); border-radius: var(--radius-md);
+  font-size: var(--font-size-base); color: white;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
-.onboarding__input:focus { border-color: var(--color-primary); outline: none; }
-.onboarding__input::placeholder { color: var(--color-text-tertiary); }
+.onboarding__input::placeholder { color: rgba(255, 255, 255, 0.5); }
+.onboarding__input:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.18);
+  outline: none;
+}
 .onboarding__input--error {
-  border-color: var(--color-error);
+  border-color: #FCA5A5;
   animation: shake var(--transition-normal) ease;
 }
 @keyframes shake {
@@ -101,8 +99,11 @@
   75%      { transform: translateX(5px); }
 }
 
-/* --- Grille de tâches --- */
-.onboarding__counter { font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: var(--space-sm); }
+/* --- Grille de taches (chips transparents) --- */
+.onboarding__counter {
+  font-size: var(--font-size-sm); color: rgba(255, 255, 255, 0.7);
+  margin-bottom: var(--space-sm);
+}
 .onboarding__task-grid {
   width: 100%; max-width: 300px; max-height: 280px;
   overflow-y: auto; display: flex; flex-direction: column;
@@ -112,36 +113,19 @@
 .onboarding__task-chip {
   display: flex; align-items: center; gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-  cursor: pointer; min-height: 44px;
-  transition: background-color 150ms ease;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--radius-md);
+  font-size: var(--font-size-sm); color: white; cursor: pointer; min-height: 44px;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 .onboarding__task-chip:hover { background-color: var(--color-primary-10); }
 .onboarding__task-chip--selected {
-  background-color: var(--color-primary-10);
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.2);
 }
-.onboarding__task-chip-check {
-  width: 22px; height: 22px; border-radius: 6px;
-  border: 2px solid var(--color-border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: var(--font-size-xs);
-  transition: all var(--transition-fast);
-  flex-shrink: 0;
-}
-.onboarding__task-chip-check--on {
-  background: var(--color-primary); border-color: var(--color-primary);
-  color: var(--color-surface);
-}
-.onboarding__task-chip-points {
-  margin-left: auto;
-  font-size: var(--font-size-xs);
-  color: var(--color-text-tertiary);
-  font-weight: var(--font-weight-bold);
-}
+.onboarding__task-chip-points { color: rgba(255, 255, 255, 0.6); font-size: var(--font-size-xs); }
 
-/* --- Formulaire tâche perso --- */
+/* --- Formulaire tache perso --- */
 .onboarding__custom-form {
   width: 100%; max-width: 360px;
   display: flex; gap: var(--space-sm); margin-bottom: var(--space-md);
@@ -149,36 +133,33 @@
 .onboarding__custom-form .onboarding__input { flex: 1; margin-bottom: 0; }
 .onboarding__custom-form .onboarding__input:last-of-type { max-width: 80px; }
 
-/* --- Code couple (bordure pointillée) --- */
+/* --- Code couple (bordure pointillee) --- */
 .onboarding__couple-code {
-  background: var(--color-primary-10);
-  border: 2px dashed var(--color-primary-light);
-  border-radius: var(--radius-lg);
-  padding: 20px var(--space-xl);
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-black);
-  color: var(--color-primary);
-  letter-spacing: 4px;
-  text-align: center;
-  margin-bottom: var(--space-md);
+  font-size: var(--font-size-2xl); font-weight: 700;
+  letter-spacing: 4px; text-align: center; color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px dashed rgba(255, 255, 255, 0.5);
+  padding: var(--space-lg) var(--space-xl);
+  border-radius: var(--radius-md); margin-bottom: var(--space-lg);
 }
 
-/* --- CTA et boutons --- */
-.onboarding__cta {
-  width: 100%; max-width: 280px; margin-top: var(--space-sm);
-  padding: var(--space-md);
+/* --- CTA et boutons (inverses : blanc sur vert) --- */
+.onboarding__cta.btn--primary {
+  background: white; color: var(--color-primary-dark);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
-.onboarding__cta:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.onboarding__cta { width: 100%; max-width: 320px; margin-top: var(--space-sm); }
+.onboarding__cta:disabled { opacity: 0.5; cursor: not-allowed; }
 .onboarding__add-btn {
   margin-bottom: var(--space-sm); background: none; border: none;
-  color: var(--color-primary); font-weight: 600; cursor: pointer; min-height: 44px;
+  color: rgba(255, 255, 255, 0.9); font-weight: 600; cursor: pointer; min-height: 44px;
 }
 .onboarding__skip {
   margin-top: var(--space-sm); background: none; border: none;
-  color: var(--color-text-secondary); font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  cursor: pointer; min-height: 44px;
-  font-family: var(--font-family);
+  color: rgba(255, 255, 255, 0.7); cursor: pointer; min-height: 44px;
+}
+.onboarding__copy-btn.btn--secondary {
+  background: transparent; border-color: rgba(255, 255, 255, 0.5);
+  color: white;
 }
 .onboarding__copy-btn { margin-bottom: var(--space-sm); max-width: 280px; width: 100%; }

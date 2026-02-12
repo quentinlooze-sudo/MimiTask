@@ -1,28 +1,15 @@
 /* ==============================================
-   MimiTask — Écran Tâches
+   MimiTask — Ecran Taches
    Header, filtres, cartes, FAB, modal, empty states
    ============================================== */
 
-/* --- Header tâches --- */
+/* --- Header taches --- */
 .tasks-header {
-  position: sticky; top: 0; z-index: 30;
-  background: rgba(240, 247, 244, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 20px 20px 12px;
+  position: sticky; top: 0; z-index: 10;
+  background-color: transparent;
+  padding: var(--space-md) var(--space-md) var(--space-sm);
 }
-.tasks-header__title {
-  font-family: var(--font-family-heading);
-  font-size: 28px;
-  font-weight: var(--font-weight-extrabold);
-  color: var(--color-text);
-  letter-spacing: var(--letter-spacing-tight);
-}
-.tasks-header__subtitle {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  margin-top: 2px;
-}
+.tasks-header__title { font-family: var(--font-family-accent); font-size: var(--font-size-xl); font-weight: 700; }
 
 /* --- Filtres --- */
 .tasks-filters {
@@ -43,18 +30,17 @@
   transition: all 0.25s ease;
 }
 .tasks-filter-chip--active {
-  background-color: var(--color-primary);
-  color: var(--color-surface); border-color: var(--color-primary);
-  box-shadow: 0 2px 8px rgba(45, 106, 79, 0.25);
+  background: #FFFFFF;
+  color: var(--color-primary-dark); border-color: transparent;
 }
 
-/* --- Liste de tâches --- */
+/* --- Liste de taches --- */
 .task-list {
   display: flex; flex-direction: column; gap: 6px;
   padding: 0 var(--space-sm) var(--space-md);
 }
 
-/* --- Label catégorie --- */
+/* --- Label categorie --- */
 .task-list__category-label {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
@@ -65,17 +51,13 @@
   padding: var(--space-md) var(--space-sm) 6px;
 }
 
-/* --- Carte tâche --- */
+/* --- Carte tache --- */
 .task-card {
-  position: relative; display: flex; align-items: center; gap: 14px;
-  background-color: var(--color-surface); box-shadow: var(--shadow-sm);
-  border-radius: var(--radius-sm); padding: 14px 20px; overflow: hidden;
-  transition: all var(--transition-fast);
-  cursor: pointer;
-}
-.task-card:hover {
-  background: var(--color-primary-10);
-  transform: translateX(2px);
+  position: relative; display: flex; align-items: center; gap: var(--space-md);
+  background-color: rgba(255, 255, 255, 0.08); box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md); padding: var(--space-md); overflow: hidden;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
 }
 .task-card--completed { opacity: 0.5; }
 .task-card--completed .task-card__name { text-decoration: line-through; }
@@ -94,39 +76,24 @@
   border: 2.5px solid var(--color-border);
   background: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  font-size: var(--font-size-sm); color: transparent;
-  flex-shrink: 0;
-  transition: all 0.3s var(--ease-spring);
+  font-size: var(--font-size-xs); color: transparent;
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
 .task-card__check--done {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-surface);
-  transform: scale(1.1);
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+  color: var(--color-primary-dark);
 }
 
 /* Contenu de la carte */
 .task-card__icon { font-size: var(--font-size-lg); }
-.task-card__info { display: flex; flex-direction: column; flex: 1; gap: 2px; min-width: 0; }
-.task-card__name {
-  font-weight: var(--font-weight-bold);
-  font-size: 15px;
-  color: var(--color-text);
-}
-.task-card__meta {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-tertiary);
-  margin-top: 2px;
-}
+.task-card__info { display: flex; flex-direction: column; flex: 1; gap: 2px; }
+.task-card__name { font-weight: 600; font-size: var(--font-size-base); }
+.task-card__meta { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
 .task-card__points {
-  background: var(--color-primary-pale);
-  color: var(--color-primary);
-  font-size: 13px;
-  font-weight: var(--font-weight-extrabold);
-  font-family: var(--font-family-heading);
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-full);
-  white-space: nowrap;
+  font-family: var(--font-family-accent); font-weight: 700; color: var(--color-points);
+  background: rgba(255, 255, 255, 0.15); border-radius: var(--radius-full);
+  padding: 2px 8px; font-size: var(--font-size-xs);
 }
 
 /* Avatar partenaire */
@@ -141,7 +108,7 @@
 .task-card__avatar--a { background-color: var(--color-partner-a); }
 .task-card__avatar--b { background-color: var(--color-partner-b); }
 
-/* --- Délégation --- */
+/* --- Delegation --- */
 .task-card__delegate {
   background: none; border: none; cursor: pointer;
   font-size: var(--font-size-base); color: var(--color-text-secondary);
@@ -155,7 +122,7 @@
   color: var(--color-secondary); font-weight: 600;
 }
 .delegation-banner {
-  background-color: var(--color-secondary-light); border-radius: var(--radius-md);
+  background-color: rgba(244, 162, 97, 0.15); border-radius: var(--radius-md);
   padding: var(--space-md); margin-bottom: var(--space-sm);
 }
 .delegation-banner__text { font-size: var(--font-size-sm); font-weight: 600; margin-bottom: var(--space-sm); }
@@ -182,13 +149,13 @@
   bottom: calc(var(--tab-bar-height) + var(--space-md) + env(safe-area-inset-bottom, 0px));
   right: 20px;
   width: 56px; height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
-  color: var(--color-surface);
+  border-radius: var(--radius-full);
+  background: #FFFFFF;
+  color: var(--color-primary-dark);
   border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: var(--shadow-fab); z-index: 40;
-  transition: all 0.3s var(--ease-spring);
+  box-shadow: var(--shadow-fab); z-index: 50;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 .fab:hover { transform: scale(1.1) rotate(90deg); }
 .fab:active { transform: scale(0.95); }
@@ -199,12 +166,7 @@
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 20px;
 }
-.modal__title {
-  font-family: var(--font-family-heading);
-  font-size: 20px;
-  font-weight: var(--font-weight-extrabold);
-  color: var(--color-text);
-}
+.modal__title { font-family: var(--font-family-accent); font-size: var(--font-size-lg); font-weight: 700; }
 .modal__close {
   background: none; border: none; cursor: pointer;
   color: var(--color-text-secondary); font-size: var(--font-size-xl);
@@ -216,24 +178,19 @@
 /* --- Formulaire dans modal --- */
 .modal__form { display: flex; flex-direction: column; gap: var(--space-md); }
 .form-group { display: flex; flex-direction: column; gap: var(--space-xs); }
-.form-group__label {
-  font-size: 13px;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-secondary);
-}
+.form-group__label { font-size: var(--font-size-sm); font-weight: 600; color: rgba(255, 255, 255, 0.8); }
 .form-group__input,
 .form-group__select {
-  width: 100%; padding: 14px var(--space-md);
-  border: 2px solid var(--color-border); border-radius: var(--radius-sm);
-  font-size: var(--font-size-base); background-color: var(--color-surface);
-  font-family: var(--font-family);
-  color: var(--color-text);
-  transition: border-color var(--transition-fast);
+  width: 100%; padding: var(--space-md);
+  border: 1px solid rgba(255, 255, 255, 0.3); border-radius: var(--radius-md);
+  font-size: var(--font-size-base); background-color: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
   -webkit-appearance: none; appearance: none;
 }
+.form-group__input::placeholder { color: rgba(255, 255, 255, 0.5); }
 .form-group__input:focus,
-.form-group__select:focus { border-color: var(--color-primary); outline: none; }
-.form-group__input::placeholder { color: var(--color-text-tertiary); }
+.form-group__select:focus { border-color: rgba(255, 255, 255, 0.6); background-color: rgba(255, 255, 255, 0.18); outline: none; }
 .form-group__input--error { border-color: var(--color-error); }
 .form-group__select-wrapper { position: relative; }
 .form-group__select-wrapper::after {

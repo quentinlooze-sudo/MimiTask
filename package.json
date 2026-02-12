@@ -1,0 +1,17 @@
+{
+  "name": "mimitask",
+  "version": "2.0.0",
+  "private": true,
+  "description": "PWA mobile-first qui gamifie les tâches ménagères pour les couples",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.1.0"
+  },
+  "dependencies": {
+    "firebase": "^12.9.0"
+  }
+}

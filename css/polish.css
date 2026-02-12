@@ -5,7 +5,6 @@
 
 /* --- Responsive --- */
 
-/* Desktop : contenu centré, largeur mobile */
 @media (min-width: 768px) {
   main { max-width: 540px; margin: 0 auto; }
   .tab-bar { max-width: 540px; left: 50%; transform: translateX(-50%); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
@@ -20,21 +19,25 @@
 }
 
 /* --- Boutons hover/active --- */
-.btn--primary:active { transform: scale(0.97); }
-.btn--primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-.btn--secondary:active { background-color: rgba(45, 106, 79, 0.08); }
-.btn--ghost:active { background-color: rgba(0, 0, 0, 0.05); }
+
+.btn--primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); }
+.btn--primary:active { transform: scale(0.98); box-shadow: var(--shadow-btn-primary); }
+.btn--secondary:active { background-color: rgba(255, 255, 255, 0.1); }
+.btn--ghost:active { background-color: rgba(255, 255, 255, 0.08); }
 .tab-bar__item:active { transform: scale(0.92); }
 
 @media (hover: hover) {
-  .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(45, 106, 79, 0.4); }
-  .btn--secondary:hover { background-color: rgba(45, 106, 79, 0.05); }
+  .btn--secondary:hover { background-color: rgba(255, 255, 255, 0.05); }
   .btn--ghost:hover { color: var(--color-text); }
+  .task-card:hover { transform: translateX(2px); }
+  .task-card__check:hover { border-color: rgba(255, 255, 255, 0.5); }
   .task-card__delegate:hover { color: var(--color-primary); }
   .reward-card__delete:hover { color: var(--color-error); }
+  .fab:hover { transform: scale(1.05); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); }
 }
 
-/* --- Check animation (validation tâche) --- */
+/* --- Check animation (validation tache) --- */
+
 @keyframes check-bounce {
   0% { transform: scale(0); }
   50% { transform: scale(1.3); }
@@ -45,21 +48,25 @@
 }
 
 /* --- Confetti CSS (validation + reward) --- */
+
 @keyframes confetti-fall {
   0% { transform: translateY(0) rotate(0deg); opacity: 1; }
   100% { transform: translateY(120px) rotate(720deg); opacity: 0; }
 }
-.confetti-piece {
-  position: absolute;
-  width: 8px; height: 8px; border-radius: 2px;
-  animation: confetti-fall 1s ease-out forwards;
-  z-index: 200; pointer-events: none;
+.task-card--completing::after {
+  content: ''; display: block; position: absolute; top: 50%; left: 20%;
+  width: 6px; height: 6px; border-radius: var(--radius-full);
+  background-color: rgba(255, 255, 255, 0.8);
+  animation: confetti-fall 600ms ease forwards;
+  pointer-events: none;
 }
 
 /* --- Toast info type --- */
-.toast--info { border-left: none; }
+
+.toast--info { color: var(--color-secondary-light); }
 
 /* --- Noms longs : ellipsis --- */
+
 .task-card__name,
 .reward-card__name,
 .score-card__label,
@@ -70,7 +77,67 @@
 .task-card__name { max-width: 160px; }
 .reward-card__name { max-width: 180px; }
 
+/* --- Screen transition (subtil) --- */
+
+.screen--active {
+  animation: screen-fade 200ms ease;
+}
+@keyframes screen-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- Stagger animation taches --- */
+
+@keyframes fade-slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.task-card { animation: fade-slide-in 300ms ease backwards; }
+.task-card:nth-child(1) { animation-delay: 0ms; }
+.task-card:nth-child(2) { animation-delay: 50ms; }
+.task-card:nth-child(3) { animation-delay: 100ms; }
+.task-card:nth-child(4) { animation-delay: 150ms; }
+.task-card:nth-child(5) { animation-delay: 200ms; }
+.task-card:nth-child(n+6) { animation-delay: 250ms; }
+
+/* --- Shimmer (reward progress) --- */
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.next-reward__progress-fill::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* --- Pulse glow (streak fire) --- */
+
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+.streak__icon {
+  animation: pulse-glow 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* --- Floating (empty state) --- */
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.empty-state__icon {
+  animation: gentle-float 3s ease-in-out infinite;
+  display: inline-block;
+}
+
 /* --- Reduced motion --- */
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms;

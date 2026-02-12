@@ -4,6 +4,7 @@
    ============================================== */
 
 import * as store from './store.js';
+import { initAuth } from './auth.js';
 import { initTasks, renderTaskList } from './tasks.js';
 import { initDashboard, renderDashboard } from './dashboard.js';
 import { initRewards } from './rewards.js';
@@ -59,6 +60,13 @@ function showToast(message, type = 'success', duration = 3000) {
 
 /* Initialisation au chargement */
 document.addEventListener('DOMContentLoaded', async () => {
+  // Auth Firebase (non bloquant — si offline, l'app continue en localStorage)
+  try {
+    await initAuth();
+  } catch (err) {
+    console.warn('[app] Auth Firebase indisponible, mode local actif.');
+  }
+
   store.init();
   initNavigation();
 

@@ -3,21 +3,22 @@
    Typo, layout global, utilitaires
    ============================================== */
 
-/* Body — fond gradienté vert pâle vers crème */
+/* Body — fond gradiete vert pale vers creme */
 body {
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   color: var(--color-text);
-  background: linear-gradient(180deg, var(--color-bg) 0%, #FAFCFB 50%, var(--color-bg-warm) 100%);
+  background: linear-gradient(160deg, var(--color-bg) 0%, var(--color-bg-warm) 100%);
   background-attachment: fixed;
+  min-height: 100dvh;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typographie — Quicksand pour les titres */
+/* Typographie */
 h1, h2, h3 {
-  font-family: var(--font-family-heading);
+  font-family: var(--font-family-accent);
 }
 
 h1 {
@@ -43,7 +44,7 @@ main {
   padding-bottom: calc(var(--tab-bar-height) + env(safe-area-inset-bottom, 0px));
 }
 
-/* Accessibilité — contenu visuellement masqué mais lisible par les lecteurs d'écran */
+/* Accessibilite — contenu visuellement masque mais lisible par les lecteurs d'ecran */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -75,6 +76,6 @@ main {
 
 /* Focus visible pour la navigation clavier */
 :focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid rgba(255, 255, 255, 0.6);
   outline-offset: 2px;
 }

@@ -52,7 +52,7 @@ function updateTaskCount() {
 }
 
 /* Navigation entre les étapes */
-function goToStep(step) {
+async function goToStep(step) {
   const steps = document.querySelectorAll('.onboarding__step');
   const dots = document.querySelectorAll('.onboarding__dot');
 
@@ -67,9 +67,10 @@ function goToStep(step) {
   const focusEl = target.querySelector('input:not([hidden]), button.onboarding__cta');
   if (focusEl) focusEl.focus();
 
-  // Afficher le code couple à l'étape 5
+  // Afficher le code couple à l'étape 5 (priorité au code Firestore)
   if (step === 5) {
-    document.getElementById('couple-code').textContent = store.getCoupleCode();
+    const { getCoupleCode: authCode } = await import('./auth.js');
+    document.getElementById('couple-code').textContent = authCode() || store.getCoupleCode();
   }
 }
 
@@ -164,10 +165,12 @@ function initOnboarding() {
   });
   document.getElementById('confirm-custom-task').addEventListener('click', addCustomTask);
 
-  // Copier le code couple
+  // Copier le code couple (priorité au code Firestore)
   document.getElementById('copy-code').addEventListener('click', async () => {
     try {
-      await navigator.clipboard.writeText(store.getCoupleCode());
+      const { getCoupleCode: authCode } = await import('./auth.js');
+      const code = authCode() || store.getCoupleCode();
+      await navigator.clipboard.writeText(code);
       window.showToast('Code copié !');
     } catch {
       window.showToast('Impossible de copier', 'error');
@@ -175,12 +178,24 @@ function initOnboarding() {
   });
 
   // Navigation entre étapes (délégation sur le conteneur)
-  el.addEventListener('click', (e) => {
+  el.addEventListener('click', async (e) => {
     const action = e.target.closest('[data-action]')?.dataset.action;
     if (!action) return;
 
     if (action === 'next') {
-      if (currentStep === 2 && !submitNames()) return;
+      if (currentStep === 2) {
+        if (!submitNames()) return;
+        // Créer le couple dans Firestore (non bloquant si offline)
+        try {
+          const { createCouple } = await import('./auth.js');
+          await createCouple(
+            document.getElementById('partner-a-name').value,
+            document.getElementById('partner-b-name').value
+          );
+        } catch (err) {
+          console.warn('[onboarding] Création Firestore échouée, mode local:', err.message);
+        }
+      }
       goToStep(currentStep + 1);
     } else if (action === 'back') {
       goToStep(currentStep - 1);
