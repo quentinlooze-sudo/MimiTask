@@ -20,15 +20,15 @@ function calculateTaskPoints(basePoints, currentStreak) {
   return Math.min(pts, MAX_POINTS_CAP);
 }
 
-/* Vérifie si une récompense est débloquée et la déverrouille */
-function checkRewardUnlock() {
-  const { couplePoints } = store.getStats();
-  const rewards = store.getRewards().filter(r => !r.unlockedAt);
+/* Vérifie si une récompense individuelle ou couple est débloquée */
+function checkRewardUnlock(partnerId) {
+  const stats = store.getStats();
+  const myPts = stats[partnerId]?.totalPoints || 0;
+  const couplePts = stats.couplePoints || 0;
+  const rewards = store.getRewards().filter(r => !r.unlockedAt && r.type !== 'power');
   for (const reward of rewards) {
-    if (couplePoints >= reward.pointsCost) {
-      store.unlockReward(reward.id);
-      return reward;
-    }
+    const pts = reward.type === 'couple' ? couplePts : myPts;
+    if (pts >= reward.pointsCost) { store.unlockReward(reward.id); return reward; }
   }
   return null;
 }
@@ -37,23 +37,32 @@ function checkRewardUnlock() {
 function processTaskCompletion(taskId, partnerId) {
   const task = store.getTasks().find(t => t.id === taskId);
   if (!task) return null;
+  const isPaidDelegated = task.delegationStatus?.type === 'paid' && task.delegationStatus?.status === 'accepted';
   const { newStreak, milestone } = updatePartnerStreak(partnerId);
-  const points = calculateTaskPoints(task.points, newStreak);
-  const bonusApplied = newStreak >= STREAK_BONUS_THRESHOLD;
-  store.addPoints(partnerId, points);
+  const points = isPaidDelegated ? 0 : calculateTaskPoints(task.points, newStreak);
+  const bonusApplied = !isPaidDelegated && newStreak >= STREAK_BONUS_THRESHOLD;
+  if (points > 0) store.addPoints(partnerId, points);
   store.completeTask(taskId);
-  const rewardUnlocked = checkRewardUnlock();
-  return { points, bonusApplied, rewardUnlocked, milestone };
+  const rewardUnlocked = points > 0 ? checkRewardUnlock(partnerId) : null;
+  return { points, bonusApplied, rewardUnlocked, milestone, isPaidDelegated };
 }
 
-/* Retourne la prochaine récompense non débloquée la moins chère */
-function getNextReward() {
-  const rewards = store.getRewards().filter(r => !r.unlockedAt);
+/* Retourne la prochaine récompense non débloquée la plus proche */
+function getNextReward(partnerId) {
+  const stats = store.getStats();
+  const myPts = partnerId ? (stats[partnerId]?.totalPoints || 0)
+    : Math.max(stats.partnerA?.totalPoints || 0, stats.partnerB?.totalPoints || 0);
+  const couplePts = stats.couplePoints || 0;
+  const rewards = store.getRewards().filter(r => !r.unlockedAt && r.type !== 'power');
   if (rewards.length === 0) return null;
-  rewards.sort((a, b) => a.pointsCost - b.pointsCost);
+  rewards.sort((a, b) => {
+    const ra = a.pointsCost - (a.type === 'couple' ? couplePts : myPts);
+    const rb = b.pointsCost - (b.type === 'couple' ? couplePts : myPts);
+    return ra - rb;
+  });
   const next = rewards[0];
-  const { couplePoints } = store.getStats();
-  return { name: next.name, pointsCost: next.pointsCost, remaining: next.pointsCost - couplePoints };
+  const pts = next.type === 'couple' ? couplePts : myPts;
+  return { name: next.name, pointsCost: next.pointsCost, remaining: next.pointsCost - pts, type: next.type };
 }
 
 /* Stats hebdomadaires d'un partenaire (lundi → dimanche) */

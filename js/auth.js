@@ -88,14 +88,15 @@ async function createCouple(nameA, nameB) {
   if (!nameA?.trim() || !nameB?.trim()) throw new Error('INVALID_NAMES');
 
   try {
-    // Générer un code unique avec vérification de collision
+    // Générer un code unique — permission-denied = doc n'existe pas = code disponible
     let code = null;
     for (let i = 0; i < MAX_CODE_RETRIES; i++) {
       const candidate = generateCoupleCode();
-      const snapshot = await getDoc(doc(db, COUPLES_COLLECTION, candidate));
-      if (!snapshot.exists()) {
-        code = candidate;
-        break;
+      try {
+        const snapshot = await getDoc(doc(db, COUPLES_COLLECTION, candidate));
+        if (!snapshot.exists()) { code = candidate; break; }
+      } catch {
+        code = candidate; break;
       }
     }
     if (!code) throw new Error('CODE_GENERATION_FAILED');
