@@ -3,7 +3,7 @@
    Cache-first assets, network-first données
    ============================================== */
 
-const CACHE_NAME = 'mimitask-v8';
+const CACHE_NAME = 'mimitask-v9';
 
 const STATIC_ASSETS = [
   './',
@@ -20,6 +20,7 @@ const STATIC_ASSETS = [
   './css/settings.css',
   './css/delegation.css',
   './css/mascot-customizer.css',
+  './css/notifications.css',
   './css/polish.css',
   './js/app.js',
   './js/store.js',
@@ -37,6 +38,7 @@ const STATIC_ASSETS = [
   './js/mascot-customizer.js',
   './js/sync.js',
   './js/sync-indicator.js',
+  './js/notifications.js',
   './data/default-tasks.json',
   './data/default-rewards.json',
   './data/mascot-phrases.json',

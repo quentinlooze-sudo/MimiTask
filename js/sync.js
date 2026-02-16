@@ -102,6 +102,24 @@ function listenCouple(ref) {
   );
 }
 
+/* --- Listener notifications (reward usage) --- */
+function listenNotifications(ref) {
+  return onSnapshot(
+    collection(ref, 'notifications'),
+    { includeMetadataChanges: true },
+    (snapshot) => {
+      if (snapshot.metadata.hasPendingWrites) return;
+      snapshot.docChanges().forEach(change => {
+        if (change.type === 'added') {
+          const notif = { id: change.doc.id, ...change.doc.data() };
+          window.handleIncomingNotification?.(notif);
+        }
+      });
+    },
+    (err) => handleError('notifications', err)
+  );
+}
+
 /* --- Listener mascotte prefs --- */
 function listenMascot(ref) {
   return onSnapshot(
@@ -142,9 +160,10 @@ function startSync() {
   unsubs.push(listenStats(ref));
   unsubs.push(listenCouple(ref));
   unsubs.push(listenMascot(ref));
+  unsubs.push(listenNotifications(ref));
   syncing = true;
   window.setSyncStatus?.('ok');
-  console.log('[sync] 5 listeners actifs');
+  console.log('[sync] 6 listeners actifs');
 }
 
 function stopSync() {

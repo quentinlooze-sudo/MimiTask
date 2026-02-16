@@ -127,7 +127,25 @@ function useReward(id, partnerId) {
     if (!deductPoints(partnerId, cost)) return false;
   }
   r.unlockedAt = null; r.usedAt = new Date().toISOString();
-  save(); fs.writeReward(r); fs.writeStats(data.stats); return true;
+  save(); fs.writeReward(r); fs.writeStats(data.stats);
+
+  /* Notifier l'autre partenaire via Firestore */
+  if (partnerId) {
+    const other = partnerId === 'partnerA' ? 'partnerB' : 'partnerA';
+    const senderName = data.couple[partnerId]?.name || partnerId;
+    fs.writeNotification({
+      id: generateId(),
+      type: 'reward_used',
+      rewardName: r.name,
+      rewardIcon: r.icon || '🎁',
+      rewardType: r.type || 'individual',
+      sender: partnerId,
+      senderName,
+      target: other,
+      createdAt: new Date().toISOString()
+    });
+  }
+  return true;
 }
 function deleteReward(id) { data.rewards = data.rewards.filter(r => r.id !== id); save(); fs.removeReward(id); }
 function addDefaultRewards(arr) {
@@ -171,6 +189,9 @@ function checkAndResetRecurringTasks() {
   return count;
 }
 
+/* ---- Notifications ---- */
+function dismissNotification(notifId) { fs.removeNotification(notifId); }
+
 function exportData() { return JSON.stringify(data, null, 2); }
 function importData(json) { data = JSON.parse(json); save(); fs.batchWriteTasks(data.tasks); fs.batchWriteRewards(data.rewards); fs.writeStats(data.stats); }
 function resetAll() { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem('mimitask_couple_code'); data = clone(DEFAULT_DATA); save(); }
@@ -185,4 +206,5 @@ export { init, syncFromFirestore, getData, save, isOnboardingDone, setOnboarding
   addTask, completeTask, deleteTask, addDefaultTasks, requestDelegation, acceptDelegation,
   declineDelegation, getPendingDelegations, getRewards, addReward, unlockReward, useReward,
   deleteReward, addDefaultRewards, getStats, getMascotPrefs, addPoints, deductPoints,
-  getBalance, updateStreak, checkAndResetRecurringTasks, exportData, importData, resetAll, applySnapshot };
+  getBalance, updateStreak, checkAndResetRecurringTasks, dismissNotification,
+  exportData, importData, resetAll, applySnapshot };

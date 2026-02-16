@@ -1,0 +1,79 @@
+/* ==============================================
+   MimiTask — Notifications cross-partner
+   Banner slide-down pour reward usage
+   ============================================== */
+
+.notification-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  pointer-events: none;
+}
+
+.notif-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-md);
+  background: linear-gradient(135deg, #7209B7 0%, #9B59B6 100%);
+  color: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  pointer-events: auto;
+  transform: translateY(-120%);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.25s ease;
+}
+
+.notif-banner--visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.notif-banner__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-banner__text {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.notif-banner__close {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: var(--radius-full);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.notif-banner__close:hover,
+.notif-banner__close:focus-visible {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Safe area pour les phones avec notch */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .notification-container {
+    padding-top: calc(env(safe-area-inset-top) + var(--space-sm));
+  }
+}

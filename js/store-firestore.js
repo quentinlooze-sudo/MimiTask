@@ -165,10 +165,28 @@ async function pullFromFirestore() {
   }
 }
 
+/* --- Notifications --- */
+async function writeNotification(notif) {
+  const ref = coupleRef();
+  if (!ref) return;
+  try {
+    await wrapWrite(() => setDoc(doc(ref, 'notifications', notif.id), notif));
+  } catch (err) { console.warn('[store-fs] writeNotification failed:', err.code || err); }
+}
+
+async function removeNotification(notifId) {
+  const ref = coupleRef();
+  if (!ref) return;
+  try {
+    await wrapWrite(() => deleteDoc(doc(ref, 'notifications', notifId)));
+  } catch (err) { console.warn('[store-fs] removeNotification failed:', err.code || err); }
+}
+
 export {
   setCoupleCode, isFirestoreReady, coupleRef,
   writeTask, removeTask, batchWriteTasks,
   writeReward, removeReward, batchWriteRewards,
   writeStats, writeCoupleField, writeMascotPrefs, readMascotPrefs,
+  writeNotification, removeNotification,
   pullFromFirestore
 };

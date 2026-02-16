@@ -9,6 +9,7 @@ import { initDashboard, renderDashboard } from './dashboard.js';
 import { initRewards } from './rewards.js';
 import { checkStreaksAtBoot } from './points.js';
 import { initMascotCustomizer } from './mascot-customizer.js';
+import { initNotifications } from './notifications.js';
 
 /* Navigation entre les onglets */
 function initNavigation() {
@@ -84,6 +85,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   initDashboard();
   initRewards();
   initSettings();
+
+  // Notifications cross-partner (avant sync pour que le handler soit prêt)
+  initNotifications();
 
   // Sync temps réel Firestore (après init pour que window.render* soient dispo)
   try { const m = await import('./sync.js'); m.initIndicator(); m.startSync(); }
