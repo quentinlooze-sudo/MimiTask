@@ -92,6 +92,7 @@
   <link rel="stylesheet" href="css/settings.css">
   <link rel="stylesheet" href="css/delegation.css">
   <link rel="stylesheet" href="css/task-accordion.css">
+  <link rel="stylesheet" href="css/mascot-customizer.css">
   <link rel="stylesheet" href="css/polish.css">
 </head>
 <body>
@@ -101,6 +102,9 @@
   <!-- Header -->
   <header>
     <h1 class="visually-hidden">MimiTask</h1>
+    <button class="sync-indicator" id="sync-indicator" hidden aria-label="Statut de synchronisation">
+      <span class="sync-indicator__dot" id="sync-dot"></span>
+    </button>
   </header>
 
   <!-- Contenu principal -->
@@ -243,6 +247,19 @@
             </div>
             <button class="btn btn--ghost btn--sm" id="copy-couple-code" aria-label="Copier le code couple">📋 Copier</button>
           </div>
+        </div>
+      </div>
+
+      <!-- Section : Personnaliser Mimi -->
+      <div class="settings-section">
+        <h3 class="settings-section__title">Personnaliser Mimi</h3>
+        <div class="settings-group card">
+          <div id="customizer-preview" class="customizer__preview"></div>
+          <p class="customizer__label">Couleur</p>
+          <div id="customizer-colors" class="customizer__colors"></div>
+          <p class="customizer__label">Accessoire</p>
+          <div id="customizer-accessories" class="customizer__accessories"></div>
+          <button class="btn btn--primary customizer__save" id="customizer-save">Sauvegarder le look</button>
         </div>
       </div>
 

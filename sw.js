@@ -3,7 +3,7 @@
    Cache-first assets, network-first données
    ============================================== */
 
-const CACHE_NAME = 'mimitask-v7';
+const CACHE_NAME = 'mimitask-v8';
 
 const STATIC_ASSETS = [
   './',
@@ -14,20 +14,29 @@ const STATIC_ASSETS = [
   './css/components.css',
   './css/onboarding.css',
   './css/tasks.css',
+  './css/task-accordion.css',
   './css/dashboard.css',
   './css/rewards.css',
   './css/settings.css',
+  './css/delegation.css',
+  './css/mascot-customizer.css',
   './css/polish.css',
   './js/app.js',
   './js/store.js',
+  './js/store-firestore.js',
+  './js/auth.js',
   './js/utils.js',
   './js/tasks.js',
+  './js/task-renderer.js',
   './js/dashboard.js',
   './js/points.js',
   './js/rewards.js',
   './js/onboarding.js',
   './js/delegation.js',
   './js/mascot.js',
+  './js/mascot-customizer.js',
+  './js/sync.js',
+  './js/sync-indicator.js',
   './data/default-tasks.json',
   './data/default-rewards.json',
   './data/mascot-phrases.json',

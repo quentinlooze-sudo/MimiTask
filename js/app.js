@@ -13,19 +13,11 @@ import { checkStreaksAtBoot } from './points.js';
 function initNavigation() {
   const tabs = document.querySelectorAll('.tab-bar__item');
   const screens = document.querySelectorAll('.screen');
-
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const targetId = tab.getAttribute('data-target');
-
-      // Désactiver tous les onglets et écrans
-      tabs.forEach(t => {
-        t.classList.remove('tab-bar__item--active');
-        t.setAttribute('aria-selected', 'false');
-      });
+      tabs.forEach(t => { t.classList.remove('tab-bar__item--active'); t.setAttribute('aria-selected', 'false'); });
       screens.forEach(s => s.classList.remove('screen--active'));
-
-      // Activer l'onglet cliqué et l'écran correspondant
       tab.classList.add('tab-bar__item--active');
       tab.setAttribute('aria-selected', 'true');
       document.getElementById(targetId)?.classList.add('screen--active');
@@ -39,18 +31,12 @@ function initNavigation() {
 function showToast(message, type = 'success', duration = 3000) {
   const container = document.getElementById('toast-container');
   if (!container) return;
-
   const toast = document.createElement('div');
   toast.className = `toast toast--${type}`;
   toast.textContent = message;
-
   container.appendChild(toast);
-
-  // Forcer le reflow avant d'ajouter la classe visible
   toast.offsetHeight;
   toast.classList.add('toast--visible');
-
-  // Retrait automatique après la durée
   setTimeout(() => {
     toast.classList.remove('toast--visible');
     toast.addEventListener('transitionend', () => toast.remove(), { once: true });
@@ -90,7 +76,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   initRewards();
   initSettings();
 
-  // Sync Firestore + indicateur
+  // Mascot customizer (import dynamique)
+  try {
+    const { initMascotCustomizer } = await import('./mascot-customizer.js');
+    initMascotCustomizer();
+  } catch (err) { console.warn('[app] Mascot customizer non disponible:', err); }
+
+  // Sync indicator
+  try {
+    const { initSyncIndicator } = await import('./sync-indicator.js');
+    initSyncIndicator();
+  } catch { console.warn('[app] Sync indicator non disponible.'); }
+
+  // Sync Firestore
   try {
     await store.syncFromFirestore();
     const { startSync } = await import('./sync.js');

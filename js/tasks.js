@@ -1,16 +1,20 @@
 /* ==============================================
    MimiTask — Écran Tâches
-   Liste, filtres, validation 1-tap, modal d'ajout
+   Filtres, accordéon, recherche, validation, modal
    ============================================== */
 
 import * as store from './store.js';
-import { isToday } from './utils.js';
+import { isToday, debounce } from './utils.js';
 import { processTaskCompletion } from './points.js';
 import { celebrateRewardUnlock } from './rewards.js';
 import { renderDelegationBanner, getDelegationBadge, getDelegateButton, handleDelegateClick, handleDelegationResponse } from './delegation.js';
 import { getPartnerRole } from './auth.js';
+import { buildCardHTML, renderEmptyState, buildAccordionHTML, buildSearchResultsHTML } from './task-renderer.js';
 
 let currentFilter = 'all';
+let currentSearchQuery = '';
+let accordionState = {};
+const ACCORDION_KEY = 'mimitask_accordion_state';
 const modalEl = () => document.getElementById('add-task-modal');
 const formEl = () => document.getElementById('add-task-form');
 
@@ -23,37 +27,13 @@ function getPartnerInfo() {
   };
 }
 
-/* Construit le HTML d'une carte tâche */
-function buildCardHTML(task, info, completed) {
-  const p = info[task.assignedTo];
-  const color = task.assignedTo === 'partnerA' ? 'a' : 'b';
-  const cls = completed ? ' task-card--completed' : '';
-  const checkCls = completed ? ' task-card__check--done' : '';
-  return `<div class="task-card${cls}" data-task-id="${task.id}">
-    <button class="task-card__check${checkCls}" data-complete="${task.id}"
-      data-partner="${task.assignedTo}" aria-label="Valider ${task.name}"${completed ? ' disabled' : ''}>
-      ${completed ? '✓' : ''}</button>
-    <span class="task-card__icon">${task.icon || '📋'}</span>
-    <div class="task-card__info">
-      <span class="task-card__name">${task.name}</span>
-      <span class="task-card__meta"><span class="task-card__points">+${task.points} pts</span>${getDelegationBadge(task)}</span>
-    </div>
-    ${getDelegateButton(task, completed)}
-    <div class="task-card__avatar task-card__avatar--${color}">${p.initial}</div>
-  </div>`;
+/* Persistence de l'état accordéon (localStorage uniquement) */
+function loadAccordionState() {
+  try { accordionState = JSON.parse(localStorage.getItem(ACCORDION_KEY)) || {}; }
+  catch { accordionState = {}; }
 }
-
-/* Affiche un empty state selon le type */
-function renderEmptyState(type) {
-  if (type === 'allDone') {
-    return `<div class="empty-state"><div class="empty-state__icon">🎉</div>
-      <p class="empty-state__title">Tout est fait !</p>
-      <p class="empty-state__subtitle">Bravo l'équipe, vous avez tout géré aujourd'hui.</p></div>`;
-  }
-  return `<div class="empty-state"><div class="empty-state__icon">📋</div>
-    <p class="empty-state__title">Rien à faire !</p>
-    <p class="empty-state__subtitle">Profitez-en… ou ajoutez une tâche pour marquer des points.</p>
-    <button class="btn btn--primary empty-state__cta" id="empty-add-task">+ Ajouter une tâche</button></div>`;
+function saveAccordionState() {
+  try { localStorage.setItem(ACCORDION_KEY, JSON.stringify(accordionState)); } catch {}
 }
 
 /* Rendu principal de la liste de tâches */
@@ -62,30 +42,67 @@ function renderTaskList(filter) {
   const info = getPartnerInfo();
   let tasks = store.getTasks();
 
-  // Filtre par partenaire
   if (currentFilter !== 'all') tasks = tasks.filter(t => t.assignedTo === currentFilter);
 
-  const active = tasks.filter(t => !t.completedAt || !isToday(t.completedAt));
-  const done = tasks.filter(t => t.completedAt && isToday(t.completedAt));
   const container = document.getElementById('task-list');
 
-  // Empty states
+  /* Empty states */
   if (store.getTasks().length === 0) {
     container.innerHTML = renderEmptyState('noTasks');
     document.getElementById('empty-add-task')?.addEventListener('click', openAddModal);
     return;
   }
-  if (active.length === 0) {
+
+  /* Mode recherche : liste plate filtrée */
+  if (currentSearchQuery) {
+    const q = currentSearchQuery.toLowerCase();
+    const filtered = tasks.filter(t => t.name.toLowerCase().includes(q));
+    if (filtered.length === 0) {
+      container.innerHTML = renderEmptyState('noSearchResults');
+      return;
+    }
+    container.innerHTML = buildSearchResultsHTML(filtered, info);
+    return;
+  }
+
+  /* Mode normal : accordéon par récurrence */
+  const active = tasks.filter(t => !t.completedAt || !isToday(t.completedAt));
+  const done = tasks.filter(t => t.completedAt && isToday(t.completedAt));
+  if (active.length === 0 && done.length > 0) {
     container.innerHTML = renderEmptyState('allDone')
       + done.map(t => buildCardHTML(t, info, true)).join('');
     return;
   }
   const banner = renderDelegationBanner(info);
-  container.innerHTML = banner + active.map(t => buildCardHTML(t, info, false)).join('')
-    + done.map(t => buildCardHTML(t, info, true)).join('');
+  container.innerHTML = banner + buildAccordionHTML(tasks, info, accordionState);
 }
 
-/* Génère les chips de filtre avec les noms du couple */
+/* Gestion de la recherche */
+function handleSearchInput(e) {
+  currentSearchQuery = e.target.value.trim();
+  renderTaskList();
+}
+
+/* Toggle accordéon (ouvert/fermé) */
+function handleAccordionToggle(e) {
+  const btn = e.target.closest('[data-accordion-toggle]');
+  if (!btn) return;
+  const key = btn.dataset.accordionToggle;
+  const isOpen = btn.getAttribute('aria-expanded') === 'true';
+  const newState = !isOpen;
+
+  btn.setAttribute('aria-expanded', newState);
+  btn.classList.toggle('accordion__header--open', newState);
+  const body = btn.nextElementSibling;
+  if (body) {
+    body.classList.toggle('accordion__body--open', newState);
+    body.hidden = !newState;
+  }
+  accordionState[key] = newState;
+  saveAccordionState();
+}
+
+/* Filtres */
 function renderFilters() {
   const info = getPartnerInfo();
   const me = getPartnerRole() || 'partnerA';
@@ -120,6 +137,7 @@ function handleTaskComplete(e) {
 
 /* Gestionnaire unifié des clics dans la liste */
 function handleTaskListClick(e) {
+  if (e.target.closest('[data-accordion-toggle]')) { handleAccordionToggle(e); return; }
   const info = getPartnerInfo();
   if (handleDelegateClick(e, info, renderTaskList)) return;
   if (handleDelegationResponse(e, info, renderTaskList)) return;
@@ -135,8 +153,7 @@ function populateAssignSelect() {
 }
 
 function openAddModal() {
-  populateAssignSelect();
-  formEl().reset();
+  populateAssignSelect(); formEl().reset();
   const el = modalEl();
   el.classList.add('modal-overlay--active');
   el.setAttribute('aria-hidden', 'false');
@@ -171,13 +188,11 @@ function handleSubmit(e) {
   let assignedTo = document.getElementById('task-assign').value;
   if (assignedTo === 'random') assignedTo = Math.random() < 0.5 ? 'partnerA' : 'partnerB';
   store.addTask({ name, points, assignedTo, recurrence: document.getElementById('task-recurrence').value });
-  closeAddModal();
-  window.showToast('Tâche ajoutée !');
-  renderTaskList();
+  closeAddModal(); window.showToast('Tâche ajoutée !'); renderTaskList();
 }
 
 function initTasks() {
-  // Modal
+  loadAccordionState();
   document.getElementById('fab-add-task').addEventListener('click', openAddModal);
   document.getElementById('close-add-task').addEventListener('click', closeAddModal);
   modalEl().addEventListener('click', (e) => { if (e.target === modalEl()) closeAddModal(); });
@@ -189,7 +204,11 @@ function initTasks() {
     input.addEventListener('input', () => input.classList.remove('form-group__input--error'));
   });
 
-  // Filtres + liste
+  /* Recherche (debounce 150ms) */
+  const searchInput = document.getElementById('task-search');
+  if (searchInput) searchInput.addEventListener('input', debounce(handleSearchInput, 150));
+
+  /* Filtres + liste */
   renderFilters();
   document.getElementById('tasks-filters').addEventListener('click', handleFilterClick);
   document.getElementById('task-list').addEventListener('click', handleTaskListClick);
