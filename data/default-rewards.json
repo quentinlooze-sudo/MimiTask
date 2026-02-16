@@ -1,72 +1,199 @@
 [
   {
     "id": "reward_001",
-    "name": "Café à deux",
+    "name": "Massage 10 min par l'autre",
     "pointsCost": 150,
-    "description": "Un petit café en terrasse bien mérité.",
-    "icon": "☕"
+    "icon": "🏆"
   },
   {
     "id": "reward_002",
-    "name": "Grasse matinée",
-    "pointsCost": 250,
-    "description": "L'autre gère le petit-déj pendant que tu dors.",
-    "icon": "😴"
+    "name": "Petit-déj offert",
+    "pointsCost": 150,
+    "icon": "🍳"
   },
   {
     "id": "reward_003",
-    "name": "Choix du film",
-    "pointsCost": 300,
-    "description": "Ce soir, c'est toi qui choisis. Sans négociation.",
+    "name": "Choix du film/série 3 soirs de suite",
+    "pointsCost": 150,
     "icon": "🎬"
   },
   {
     "id": "reward_004",
-    "name": "Massage",
-    "pointsCost": 350,
-    "description": "20 minutes de massage, les yeux fermés.",
-    "icon": "💆"
+    "name": "Dessert préparé par l'autre",
+    "pointsCost": 150,
+    "icon": "🍰"
   },
   {
     "id": "reward_005",
-    "name": "Soirée ciné",
-    "pointsCost": 450,
-    "description": "Popcorn compris, bien sûr.",
+    "name": "Ciné + popcorn",
+    "pointsCost": 300,
     "icon": "🍿"
   },
   {
     "id": "reward_006",
-    "name": "Défi culinaire",
+    "name": "Petit cadeau surprise (max 30€)",
     "pointsCost": 300,
-    "description": "L'autre prépare le plat de ton choix, même s'il ne sait pas le faire.",
-    "icon": "👨‍🍳"
-  },
-  {
-    "id": "reward_007",
-    "name": "Restaurant en amoureux",
-    "pointsCost": 600,
-    "description": "Resto au choix du gagnant.",
-    "icon": "🍽️"
-  },
-  {
-    "id": "reward_008",
-    "name": "Journée sans corvées",
-    "pointsCost": 750,
-    "description": "24h off. L'autre gère tout.",
-    "icon": "🏖️"
-  },
-  {
-    "id": "reward_009",
-    "name": "Cadeau au choix",
-    "pointsCost": 900,
-    "description": "Choisis-toi un petit cadeau, tu l'as mérité.",
     "icon": "🎁"
   },
   {
+    "id": "reward_007",
+    "name": "Brunch en terrasse",
+    "pointsCost": 300,
+    "icon": "☕"
+  },
+  {
+    "id": "reward_008",
+    "name": "Passe ton tour",
+    "pointsCost": 300,
+    "description": "Pouvoir : délègue une tâche",
+    "icon": "🔄",
+    "type": "power"
+  },
+  {
+    "id": "reward_009",
+    "name": "Livre/objet déco au choix",
+    "pointsCost": 600,
+    "icon": "📚"
+  },
+  {
     "id": "reward_010",
-    "name": "Week-end surprise",
-    "pointsCost": 1200,
-    "description": "Le partenaire organise un week-end. Destination surprise.",
-    "icon": "✈️"
+    "name": "Journée spa/détente",
+    "pointsCost": 600,
+    "icon": "🧖"
+  },
+  {
+    "id": "reward_011",
+    "name": "Shopping list Zalando (50€)",
+    "pointsCost": 600,
+    "icon": "🛍️"
+  },
+  {
+    "id": "reward_012",
+    "name": "Spectacle/concert",
+    "pointsCost": 600,
+    "icon": "🎭"
+  },
+  {
+    "id": "reward_013",
+    "name": "Resto au choix (l'autre paie)",
+    "pointsCost": 600,
+    "icon": "🍽️"
+  },
+  {
+    "id": "reward_014",
+    "name": "Gros cadeau tant désiré",
+    "pointsCost": 1000,
+    "icon": "💎"
+  },
+  {
+    "id": "reward_015",
+    "name": "Journée OFF totale (l'autre gère TOUT)",
+    "pointsCost": 1000,
+    "icon": "🏖️"
+  },
+  {
+    "id": "couple_001",
+    "name": "Fast food",
+    "pointsCost": 400,
+    "icon": "🌮",
+    "type": "couple"
+  },
+  {
+    "id": "couple_002",
+    "name": "Soirée jeux de société",
+    "pointsCost": 400,
+    "icon": "🎲",
+    "type": "couple"
+  },
+  {
+    "id": "couple_003",
+    "name": "Dégustation cocktail/vin",
+    "pointsCost": 400,
+    "icon": "🍹",
+    "type": "couple"
+  },
+  {
+    "id": "couple_004",
+    "name": "Atelier couple (poterie, cuisine, etc.)",
+    "pointsCost": 400,
+    "icon": "🎨",
+    "type": "couple"
+  },
+  {
+    "id": "couple_005",
+    "name": "Spectacle/concert/théâtre/musée",
+    "pointsCost": 800,
+    "icon": "🎭",
+    "type": "couple"
+  },
+  {
+    "id": "couple_006",
+    "name": "Spa/wellness pour 2",
+    "pointsCost": 800,
+    "icon": "🧖",
+    "type": "couple"
+  },
+  {
+    "id": "couple_007",
+    "name": "Road trip journée",
+    "pointsCost": 800,
+    "icon": "🚗",
+    "type": "couple"
+  },
+  {
+    "id": "couple_008",
+    "name": "Week-end à l'étranger",
+    "pointsCost": 1500,
+    "icon": "✈️",
+    "type": "couple"
+  },
+  {
+    "id": "couple_009",
+    "name": "Nuit en hôtel de luxe",
+    "pointsCost": 1500,
+    "icon": "🏨",
+    "type": "couple"
+  },
+  {
+    "id": "couple_010",
+    "name": "Expérience mémorable à deux (montgolfière, etc.)",
+    "pointsCost": 1500,
+    "icon": "🎆",
+    "type": "couple"
+  },
+  {
+    "id": "couple_011",
+    "name": "Gros achat commun (meuble, déco, électro)",
+    "pointsCost": 1500,
+    "icon": "🎁",
+    "type": "couple"
+  },
+  {
+    "id": "couple_012",
+    "name": "Resto gastronomique",
+    "pointsCost": 1500,
+    "icon": "🍷",
+    "type": "couple"
+  },
+  {
+    "id": "couple_013",
+    "name": "Vraie escapade (3-4 jours à l'étranger)",
+    "pointsCost": 3000,
+    "icon": "✈️",
+    "type": "couple"
+  },
+  {
+    "id": "couple_014",
+    "name": "Week-end luxe all-inclusive",
+    "pointsCost": 3000,
+    "icon": "🏝️",
+    "type": "couple"
+  },
+  {
+    "id": "couple_015",
+    "name": "Investissement couple (voyage de rêve, gros projet)",
+    "pointsCost": 3000,
+    "icon": "💎",
+    "type": "couple"
   }
 ]
