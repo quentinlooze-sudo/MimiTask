@@ -1,18 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img">
   <title>Mimi le dinosaure — triste</title>
   <!-- Queue (tombante) -->
-  <path d="M30 74 Q18 76 14 82 Q12 86 16 88 Q20 86 24 80 Q28 74 34 72" fill="#2D6A4F"/>
+  <path d="M30 74 Q18 76 14 82 Q12 86 16 88 Q20 86 24 80 Q28 74 34 72" fill="#52B788"/>
   <!-- Corps -->
-  <ellipse cx="60" cy="68" rx="28" ry="32" fill="#2D6A4F"/>
+  <ellipse cx="60" cy="68" rx="28" ry="32" fill="#52B788"/>
   <!-- Ventre -->
-  <ellipse cx="60" cy="74" rx="18" ry="20" fill="#52B788"/>
+  <ellipse cx="60" cy="74" rx="18" ry="20" fill="#B7E4C7"/>
   <!-- Pattes -->
-  <ellipse cx="48" cy="98" rx="8" ry="5" fill="#2D6A4F"/>
-  <ellipse cx="72" cy="98" rx="8" ry="5" fill="#2D6A4F"/>
+  <ellipse cx="48" cy="98" rx="8" ry="5" fill="#52B788"/>
+  <ellipse cx="72" cy="98" rx="8" ry="5" fill="#52B788"/>
   <!-- Tête -->
-  <ellipse cx="60" cy="38" rx="22" ry="20" fill="#2D6A4F"/>
+  <ellipse cx="60" cy="38" rx="22" ry="20" fill="#52B788"/>
   <!-- Crête -->
-  <path d="M52 20 Q54 12 58 18 Q60 10 64 18 Q66 12 68 20" fill="#52B788" stroke="#2D6A4F" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M52 20 Q54 12 58 18 Q60 10 64 18 Q66 12 68 20" fill="#B7E4C7" stroke="#52B788" stroke-width="1.5" stroke-linejoin="round"/>
   <!-- Sourcils tristes -->
   <line x1="47" y1="28" x2="55" y2="26" stroke="#1B1B1B" stroke-width="2" stroke-linecap="round"/>
   <line x1="73" y1="28" x2="65" y2="26" stroke="#1B1B1B" stroke-width="2" stroke-linecap="round"/>
@@ -28,6 +28,6 @@
   <!-- Bouche vers le bas -->
   <path d="M53 50 Q60 44 67 50" stroke="#1B1B1B" stroke-width="2" stroke-linecap="round" fill="none"/>
   <!-- Bras tombants -->
-  <path d="M34 62 Q28 68 24 74" stroke="#2D6A4F" stroke-width="5" stroke-linecap="round" fill="none"/>
-  <path d="M86 62 Q92 68 96 74" stroke="#2D6A4F" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M34 62 Q28 68 24 74" stroke="#52B788" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M86 62 Q92 68 96 74" stroke="#52B788" stroke-width="5" stroke-linecap="round" fill="none"/>
 </svg>

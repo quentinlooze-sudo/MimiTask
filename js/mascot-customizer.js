@@ -13,7 +13,7 @@ import accCrown from '../assets/mascot/accessories/crown.svg?raw';
 import accScarf from '../assets/mascot/accessories/scarf.svg?raw';
 
 const COLORS = [
-  { id: 'vert', label: 'Vert forêt', body: '#2D6A4F', belly: '#52B788' },
+  { id: 'vert', label: 'Vert clair', body: '#52B788', belly: '#B7E4C7' },
   { id: 'orange', label: 'Orange corail', body: '#E76F51', belly: '#F4A261' },
   { id: 'violet', label: 'Violet royal', body: '#7209B7', belly: '#9D4EDD' },
   { id: 'bleu', label: 'Bleu océan', body: '#0077B6', belly: '#48CAE4' },
@@ -32,8 +32,8 @@ const ACCESSORIES = [
 let selectedColor = 'vert';
 let selectedAcc = 'none';
 
-const DEFAULT_BODY = '#2D6A4F';
-const DEFAULT_BELLY = '#52B788';
+const DEFAULT_BODY = '#52B788';
+const DEFAULT_BELLY = '#B7E4C7';
 
 /* Rendu de l'aperçu en direct */
 function renderPreview() {
@@ -41,7 +41,8 @@ function renderPreview() {
   if (!el) return;
   const c = COLORS.find(c => c.id === selectedColor) || COLORS[0];
   const acc = ACCESSORIES.find(a => a.id === selectedAcc);
-  let svg = svgHappy.replaceAll(DEFAULT_BODY, c.body).replaceAll(DEFAULT_BELLY, c.belly);
+  let svg = svgHappy.replaceAll(DEFAULT_BODY, '%%BODY%%').replaceAll(DEFAULT_BELLY, '%%BELLY%%')
+    .replaceAll('%%BODY%%', c.body).replaceAll('%%BELLY%%', c.belly);
   const accHtml = acc?.svg ? `<div style="position:absolute;inset:0;color:#1A1A2E">${acc.svg}</div>` : '';
   el.innerHTML = `<div class="customizer__preview-pet">${svg}${accHtml}</div>`;
 }

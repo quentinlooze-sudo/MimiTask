@@ -50,8 +50,11 @@ function renderMascot() {
   const color = COLORS.find(c => c.id === prefs.colorId) || COLORS[0];
   const acc = ACCESSORIES.find(a => a.id === prefs.accessoryId);
   const accHtml = acc?.svg ? `<div style="position:absolute;inset:0;color:#1A1A2E">${acc.svg}</div>` : '';
+  const rawSvg = SVG_MAP[state]
+    .replaceAll('#52B788', '%%BODY%%').replaceAll('#B7E4C7', '%%BELLY%%')
+    .replaceAll('%%BODY%%', color.body).replaceAll('%%BELLY%%', color.belly);
   const emojiEl = el.querySelector('.mascot__emoji');
-  emojiEl.innerHTML = `<div class="mascot__pet mascot__pet--${state}" style="--mascot-color:${color.body};--mascot-belly:${color.belly};position:relative">${SVG_MAP[state]}${accHtml}</div>`;
+  emojiEl.innerHTML = `<div class="mascot__pet mascot__pet--${state}" style="position:relative">${rawSvg}${accHtml}</div>`;
   el.querySelector('.mascot__speech').textContent = phrase;
 }
 
