@@ -70,7 +70,7 @@ function groupTasksByRecurrence(tasks) {
 
 /* Génère le HTML d'une section accordéon */
 function buildSectionHTML(recKey, tasks, info, accordionState) {
-  const isOpen = accordionState[recKey] !== false;
+  const isOpen = accordionState[recKey] === true;
   const active = tasks.filter(t => !t.completedAt || !isToday(t.completedAt));
   const done = tasks.filter(t => t.completedAt && isToday(t.completedAt));
   const label = RECURRENCE_LABELS[recKey] || recKey;
