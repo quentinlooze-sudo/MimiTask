@@ -1,0 +1,35 @@
+{
+  "colors": [
+    {
+      "id": "vert",
+      "label": "Vert forêt",
+      "body": "#2D6A4F",
+      "belly": "#52B788",
+      "default": true
+    },
+    {
+      "id": "orange",
+      "label": "Orange corail",
+      "body": "#E76F51",
+      "belly": "#F4A261"
+    },
+    {
+      "id": "violet",
+      "label": "Violet royal",
+      "body": "#7209B7",
+      "belly": "#9D4EDD"
+    },
+    {
+      "id": "bleu",
+      "label": "Bleu océan",
+      "body": "#0077B6",
+      "belly": "#48CAE4"
+    },
+    {
+      "id": "rouge",
+      "label": "Rouge cerise",
+      "body": "#E63946",
+      "belly": "#FF758F"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+/* ==============================================
+   MimiTask — Delegation
+   Badges, banniere, bouton passe-tour, picker
+   ============================================== */
+
+/* --- Bouton passe-tour sur carte tache --- */
+.task-card__delegate {
+  background: none; border: none; cursor: pointer;
+  font-size: var(--font-size-base); color: var(--color-text-secondary);
+  min-width: 36px; min-height: 36px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  transition: color var(--transition-fast);
+}
+.task-card__delegate:active { color: var(--color-primary); }
+
+/* --- Badges delegation --- */
+.task-card__badge {
+  display: inline-block; font-size: var(--font-size-xs);
+  color: var(--color-secondary); font-weight: 600;
+}
+.task-card__badge--paid {
+  color: var(--color-reward-light); background: rgba(114, 9, 183, 0.15);
+  padding: 2px 8px; border-radius: var(--radius-full);
+}
+
+/* --- Banniere de notification --- */
+.delegation-banner {
+  background-color: rgba(244, 162, 97, 0.15); border-radius: var(--radius-md);
+  padding: var(--space-md); margin-bottom: var(--space-sm);
+}
+.delegation-banner__text { font-size: var(--font-size-sm); font-weight: 600; margin-bottom: var(--space-sm); }
+.delegation-banner__actions { display: flex; gap: var(--space-sm); }
+
+/* --- Picker de delegation payante --- */
+.delegation-picker__list {
+  display: flex; flex-direction: column; gap: var(--space-sm);
+  max-height: 50vh; overflow-y: auto;
+}
+.delegation-picker__item {
+  display: flex; align-items: center; gap: var(--space-md);
+  width: 100%; padding: var(--space-md);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  color: var(--color-text); font-size: var(--font-size-base);
+  cursor: pointer; transition: background var(--transition-fast);
+  font-family: var(--font-family);
+}
+.delegation-picker__item:active { background: rgba(255, 255, 255, 0.2); }

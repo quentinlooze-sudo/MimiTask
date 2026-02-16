@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <title>Accessoire — Lunettes</title>
+  <!-- Verre gauche -->
+  <circle cx="50" cy="36" r="10" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  <!-- Verre droit -->
+  <circle cx="70" cy="36" r="10" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  <!-- Pont -->
+  <path d="M60 36 Q60 33 60 36" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  <line x1="60" y1="34" x2="60" y2="36" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Branches -->
+  <line x1="40" y1="34" x2="34" y2="32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <line x1="80" y1="34" x2="86" y2="32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <!-- Reflets -->
+  <path d="M46 32 Q48 30 50 32" stroke="#fff" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M66 32 Q68 30 70 32" stroke="#fff" stroke-width="1" fill="none" opacity="0.5"/>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <title>Accessoire — Écharpe</title>
+  <!-- Tour de cou -->
+  <path d="M38 52 Q40 48 60 48 Q80 48 82 52 Q80 56 60 56 Q40 56 38 52Z" fill="currentColor"/>
+  <!-- Pan qui tombe -->
+  <path d="M70 54 Q72 56 74 68 Q72 70 68 68 Q66 56 68 54" fill="currentColor"/>
+  <!-- Franges -->
+  <line x1="69" y1="68" x2="68" y2="74" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="71" y1="69" x2="71" y2="75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="73" y1="68" x2="74" y2="74" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Rayure décorative -->
+  <path d="M42 50 Q60 47 78 50" stroke="#1B1B1B" stroke-width="1" fill="none" opacity="0.15"/>
+  <path d="M40 54 Q60 57 80 54" stroke="#1B1B1B" stroke-width="1" fill="none" opacity="0.15"/>
+</svg>

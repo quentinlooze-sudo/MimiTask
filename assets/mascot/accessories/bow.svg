@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <title>Accessoire — Nœud papillon</title>
+  <!-- Boucle gauche -->
+  <path d="M46 54 Q36 48 36 54 Q36 60 46 58" fill="currentColor"/>
+  <!-- Boucle droite -->
+  <path d="M74 54 Q84 48 84 54 Q84 60 74 58" fill="currentColor"/>
+  <!-- Noeud central -->
+  <ellipse cx="60" cy="56" rx="4" ry="3" fill="currentColor"/>
+  <!-- Ombre centrale -->
+  <ellipse cx="60" cy="56" rx="2.5" ry="2" fill="#1B1B1B" opacity="0.2"/>
+</svg>

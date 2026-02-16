@@ -1,0 +1,90 @@
+/* ==============================================
+   MimiTask — Accordeon + Recherche (ecran taches)
+   Sections depliables, barre de recherche
+   ============================================== */
+
+/* --- Barre de recherche --- */
+.task-search {
+  position: relative;
+  padding: 0 var(--space-sm) var(--space-sm);
+}
+.task-search__icon {
+  position: absolute;
+  left: calc(var(--space-sm) + var(--space-md));
+  top: 50%; transform: translateY(-50%);
+  width: 18px; height: 18px;
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+}
+.task-search__input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md) var(--space-sm) 40px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  min-height: 40px;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  -webkit-appearance: none; appearance: none;
+}
+.task-search__input::placeholder { color: var(--color-text-tertiary); }
+.task-search__input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.12);
+  outline: none;
+}
+.task-search__input::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+/* --- Sections accordeon --- */
+.accordion { margin-bottom: var(--space-2xs); }
+.accordion__header {
+  display: flex; align-items: center; gap: var(--space-sm);
+  width: 100%; padding: var(--space-sm) var(--space-xs);
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-family);
+  color: var(--color-text);
+  -webkit-tap-highlight-color: transparent;
+  min-height: 36px;
+}
+.accordion__label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-text-secondary);
+}
+.accordion__count {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  font-weight: var(--font-weight-semibold);
+}
+.accordion__chevron {
+  margin-left: auto;
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--color-text-secondary);
+  border-bottom: 2px solid var(--color-text-secondary);
+  transform: rotate(45deg);
+  transition: transform var(--transition-fast);
+}
+.accordion__header--open .accordion__chevron {
+  transform: rotate(-135deg);
+}
+.accordion__body {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.accordion__body[hidden] { display: none; }
+
+/* --- Empty state recherche --- */
+.search-empty {
+  text-align: center;
+  padding: var(--space-2xl) var(--space-md);
+  color: var(--color-text-secondary);
+}
+.search-empty__icon {
+  font-size: 40px;
+  margin-bottom: var(--space-sm);
+  display: block;
+}
+.search-empty__text { font-size: var(--font-size-sm); }

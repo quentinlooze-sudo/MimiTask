@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- Helpers ---
+
+    // Vérifie que l'utilisateur est membre du couple
+    function isMember(coupleData) {
+      return request.auth != null && (
+        coupleData.partnerA.authUid == request.auth.uid ||
+        coupleData.partnerB.authUid == request.auth.uid
+      );
+    }
+
+    // Vérifie que l'utilisateur est membre en lisant le doc couple parent
+    function isMemberOf(coupleCode) {
+      let couple = get(/databases/$(database)/documents/couples/$(coupleCode)).data;
+      return request.auth != null && (
+        couple.partnerA.authUid == request.auth.uid ||
+        couple.partnerB.authUid == request.auth.uid
+      );
+    }
+
+    // --- Couples ---
+
+    match /couples/{coupleCode} {
+
+      // Lecture : membres du couple OU si partnerB n'a pas encore rejoint (joinCouple)
+      allow read: if request.auth != null && (
+        isMember(resource.data) ||
+        resource.data.partnerB.authUid == null
+      );
+
+      // Création : l'utilisateur authentifié se déclare comme partnerA
+      allow create: if request.auth != null
+        && request.resource.data.partnerA.authUid == request.auth.uid;
+
+      // Mise à jour : seuls les membres du couple
+      // Cas spécial : joinCouple — partnerB.authUid est null, l'utilisateur s'enregistre
+      allow update: if request.auth != null && (
+        isMember(resource.data) ||
+        (resource.data.partnerB.authUid == null
+          && request.resource.data.partnerB.authUid == request.auth.uid)
+      );
+
+      // Pas de suppression côté client
+      allow delete: if false;
+
+      // --- Sous-collections : accès réservé aux membres ---
+
+      match /tasks/{taskId} {
+        allow read, write: if request.auth != null && isMemberOf(coupleCode);
+      }
+
+      match /rewards/{rewardId} {
+        allow read, write: if request.auth != null && isMemberOf(coupleCode);
+      }
+
+      match /stats/{statId} {
+        allow read, write: if request.auth != null && isMemberOf(coupleCode);
+      }
+
+      match /mascot/{mascotId} {
+        allow read, write: if request.auth != null && isMemberOf(coupleCode);
+      }
+    }
+
+    // Tout le reste est interdit
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

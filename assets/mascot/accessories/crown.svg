@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <title>Accessoire — Couronne</title>
+  <!-- Base de la couronne -->
+  <rect x="40" y="18" width="40" height="8" rx="2" fill="currentColor"/>
+  <!-- Pointes -->
+  <polygon points="40,18 44,8 48,18" fill="currentColor"/>
+  <polygon points="52,18 56,6 60,18" fill="currentColor"/>
+  <polygon points="60,18 64,6 68,18" fill="currentColor"/>
+  <polygon points="72,18 76,8 80,18" fill="currentColor"/>
+  <!-- Pierres précieuses -->
+  <circle cx="46" cy="13" r="1.5" fill="#fff" opacity="0.8"/>
+  <circle cx="58" cy="10" r="1.5" fill="#fff" opacity="0.8"/>
+  <circle cx="70" cy="10" r="1.5" fill="#fff" opacity="0.8"/>
+  <circle cx="78" cy="13" r="1.5" fill="#fff" opacity="0.8"/>
+  <!-- Détail base -->
+  <line x1="42" y1="22" x2="78" y2="22" stroke="#1B1B1B" stroke-width="0.5" opacity="0.2"/>
+</svg>
