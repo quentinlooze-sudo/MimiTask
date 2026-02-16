@@ -4,6 +4,7 @@
    ============================================== */
 
 import * as store from './store.js';
+import { getPartnerRole } from './auth.js';
 
 /* Retourne le HTML du bandeau de notification pour les délégations en attente */
 function renderDelegationBanner(info) {
@@ -37,11 +38,11 @@ function getDelegateButton(task, completed) {
 function handleDelegateClick(e, info, renderCallback) {
   const btn = e.target.closest('[data-delegate]');
   if (!btn) return false;
-  const assignedTo = btn.dataset.assigned;
-  const other = assignedTo === 'partnerA' ? 'partnerB' : 'partnerA';
+  const me = getPartnerRole() || 'partnerA';
+  const other = me === 'partnerA' ? 'partnerB' : 'partnerA';
   const otherName = info[other].name;
   if (!confirm(`Demander à ${otherName} de s'en charger ?`)) return true;
-  store.requestDelegation(btn.dataset.delegate, assignedTo);
+  store.requestDelegation(btn.dataset.delegate, me);
   window.showToast(`Demande envoyée à ${otherName} !`);
   renderCallback();
   return true;

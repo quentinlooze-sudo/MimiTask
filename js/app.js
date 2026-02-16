@@ -89,41 +89,43 @@ document.addEventListener('DOMContentLoaded', async () => {
   initDashboard();
   initRewards();
   initSettings();
+
+  // Sync Firestore + indicateur
+  try {
+    await store.syncFromFirestore();
+    const { startSync } = await import('./sync.js');
+    startSync();
+    window.showSyncIndicator?.();
+  } catch { console.warn('[app] Sync Firestore non disponible.'); }
 });
+
+/* Rafraîchit le code couple dans les paramètres */
+function refreshSettingsCode() {
+  const el = document.getElementById('settings-code-display');
+  if (el) el.textContent = store.getCoupleCode() || localStorage.getItem('mimitask_couple_code') || '—';
+}
 
 /* Initialise l'écran Paramètres */
 function initSettings() {
   const couple = store.getCouple();
   const namesEl = document.getElementById('settings-names-display');
-  if (namesEl && couple.partnerA.name) {
-    namesEl.textContent = `${couple.partnerA.name} & ${couple.partnerB.name}`;
-  }
-  const codeEl = document.getElementById('settings-code-display');
-  if (codeEl && couple.coupleCode) {
-    codeEl.textContent = couple.coupleCode;
-  }
+  if (namesEl && couple.partnerA.name) namesEl.textContent = `${couple.partnerA.name} & ${couple.partnerB.name}`;
+  refreshSettingsCode();
+  window.refreshSettingsCode = refreshSettingsCode;
 
   document.getElementById('copy-couple-code')?.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(store.getCoupleCode());
-      showToast('Code copié !');
-    } catch { showToast('Impossible de copier', 'error'); }
+    try { await navigator.clipboard.writeText(store.getCoupleCode()); showToast('Code copié !'); }
+    catch { showToast('Impossible de copier', 'error'); }
   });
-
   document.getElementById('btn-export-data')?.addEventListener('click', () => {
     const blob = new Blob([store.exportData()], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'mimitask-backup.json'; a.click();
-    URL.revokeObjectURL(url);
+    const url = URL.createObjectURL(blob); const a = document.createElement('a');
+    a.href = url; a.download = 'mimitask-backup.json'; a.click(); URL.revokeObjectURL(url);
     showToast('Données exportées !');
   });
-
   document.getElementById('btn-reset-data')?.addEventListener('click', () => {
     if (!confirm('Supprimer toutes vos données ? Cette action est irréversible.')) return;
-    store.resetAll();
-    showToast('Données réinitialisées.');
-    location.reload();
+    store.resetAll(); showToast('Données réinitialisées.'); location.reload();
   });
 }
 

@@ -11,14 +11,14 @@
   <meta name="keywords" content="taches menageres couple, app partage corvees, repartition menage, charge mentale, gamification taches, application couple menage">
   <meta name="author" content="MimiTask">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://quentinlooze-sudo.github.io/MimiTask/">
+  <link rel="canonical" href="https://mimitask.web.app/">
 
   <!-- Open Graph (Facebook, WhatsApp, LinkedIn, Messenger) -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://quentinlooze-sudo.github.io/MimiTask/">
+  <meta property="og:url" content="https://mimitask.web.app/">
   <meta property="og:title" content="MimiTask — Gamifiez vos taches menageres en couple">
   <meta property="og:description" content="Transformez les corvees en jeu d'equipe ! Points, recompenses et equilibre au quotidien. Gratuit, sans inscription.">
-  <meta property="og:image" content="https://quentinlooze-sudo.github.io/MimiTask/assets/og-image.png">
+  <meta property="og:image" content="https://mimitask.web.app/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="MimiTask — Application de partage des taches menageres pour les couples">
@@ -29,7 +29,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="MimiTask — Gamifiez vos taches menageres en couple">
   <meta name="twitter:description" content="Transformez les corvees en jeu d'equipe ! Points, recompenses et equilibre.">
-  <meta name="twitter:image" content="https://quentinlooze-sudo.github.io/MimiTask/assets/og-image.png">
+  <meta name="twitter:image" content="https://mimitask.web.app/assets/og-image.png">
   <meta name="twitter:image:alt" content="MimiTask — App couple pour les taches menageres">
 
   <!-- JSON-LD Structured Data -->
@@ -40,7 +40,7 @@
     "name": "MimiTask",
     "alternateName": "Mimi Task",
     "description": "Application gratuite qui gamifie les taches menageres pour les couples. Systeme de points, recompenses et indicateur d'equilibre.",
-    "url": "https://quentinlooze-sudo.github.io/MimiTask/",
+    "url": "https://mimitask.web.app/",
     "applicationCategory": "LifestyleApplication",
     "operatingSystem": "Web",
     "browserRequirements": "Requires JavaScript. Works on modern browsers (Chrome, Safari, Firefox, Edge).",
@@ -55,7 +55,7 @@
     },
     "inLanguage": "fr",
     "keywords": "taches menageres, couple, gamification, repartition corvees, charge mentale",
-    "screenshot": "https://quentinlooze-sudo.github.io/MimiTask/assets/og-image.png",
+    "screenshot": "https://mimitask.web.app/assets/og-image.png",
     "featureList": [
       "Partage equitable des taches menageres",
       "Systeme de points et recompenses",
@@ -90,6 +90,8 @@
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="css/rewards.css">
   <link rel="stylesheet" href="css/settings.css">
+  <link rel="stylesheet" href="css/delegation.css">
+  <link rel="stylesheet" href="css/task-accordion.css">
   <link rel="stylesheet" href="css/polish.css">
 </head>
 <body>
@@ -110,6 +112,14 @@
         <h2 class="tasks-header__title">Aujourd'hui</h2>
       </div>
       <div class="tasks-filters" id="tasks-filters"></div>
+      <div class="task-search">
+        <svg class="task-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input class="task-search__input" type="search" id="task-search"
+               placeholder="Rechercher une tache..." aria-label="Rechercher une tache">
+      </div>
       <div class="task-list" id="task-list"></div>
     </section>
 
@@ -309,10 +319,6 @@
               <button type="button" class="emoji-picker__btn" data-emoji="✈️">✈️</button>
             </div>
           </div>
-          <div class="form-group">
-            <label class="form-group__label" for="reward-desc">Description (optionnel)</label>
-            <input class="form-group__input" type="text" id="reward-desc" placeholder="ex : Un bon moment a deux">
-          </div>
           <button class="btn btn--primary" type="submit">Ajouter</button>
         </form>
       </div>
@@ -338,6 +344,22 @@
       <h2 class="onboarding__title">Bienvenue sur MimiTask !</h2>
       <p class="onboarding__subtitle">Transformez vos corvees en jeu d'equipe.</p>
       <button class="btn btn--primary onboarding__cta" data-action="next">C'est parti !</button>
+      <button class="onboarding__skip" data-action="join">Rejoindre un couple existant</button>
+    </div>
+
+    <!-- Etape Rejoindre -->
+    <div class="onboarding__step" data-step="join">
+      <button class="onboarding__back-btn" data-action="back-to-welcome" aria-label="Retour">&#8592;</button>
+      <h2 class="onboarding__title">Rejoindre un couple</h2>
+      <p class="onboarding__subtitle">Entre le code que ton/ta partenaire t'a envoye.</p>
+      <div class="onboarding__form">
+        <label class="onboarding__label" for="join-couple-code">Code couple</label>
+        <input type="text" id="join-couple-code" class="onboarding__input" placeholder="ex : ABCD12" maxlength="10" autocomplete="off">
+        <label class="onboarding__label" for="join-partner-name">Ton prenom</label>
+        <input type="text" id="join-partner-name" class="onboarding__input" placeholder="ex : Lora" autocomplete="given-name">
+      </div>
+      <p class="onboarding__error" id="join-error" hidden></p>
+      <button class="btn btn--primary onboarding__cta" id="join-submit-btn" disabled>Rejoindre</button>
     </div>
 
     <!-- Etape 2 — Noms du couple -->

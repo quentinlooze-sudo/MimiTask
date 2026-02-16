@@ -106,8 +106,7 @@ function handleRewardSubmit(e) {
   const name = nameIn.value.trim();
   if (!name) { nameIn.classList.add('form-group__input--error'); nameIn.focus(); return; }
   const pointsCost = parseInt(document.getElementById('reward-cost').value);
-  const description = document.getElementById('reward-desc').value.trim();
-  store.addReward({ name, pointsCost, description, icon: selectedEmoji });
+  store.addReward({ name, pointsCost, icon: selectedEmoji });
   closeAddRewardModal();
   window.showToast('Nouvelle récompense en jeu !');
   renderRewardsList();

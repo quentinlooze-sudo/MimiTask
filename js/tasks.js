@@ -8,6 +8,7 @@ import { isToday } from './utils.js';
 import { processTaskCompletion } from './points.js';
 import { celebrateRewardUnlock } from './rewards.js';
 import { renderDelegationBanner, getDelegationBadge, getDelegateButton, handleDelegateClick, handleDelegationResponse } from './delegation.js';
+import { getPartnerRole } from './auth.js';
 
 let currentFilter = 'all';
 const modalEl = () => document.getElementById('add-task-modal');
@@ -87,10 +88,12 @@ function renderTaskList(filter) {
 /* Génère les chips de filtre avec les noms du couple */
 function renderFilters() {
   const info = getPartnerInfo();
+  const me = getPartnerRole() || 'partnerA';
+  const other = me === 'partnerA' ? 'partnerB' : 'partnerA';
   document.getElementById('tasks-filters').innerHTML = `
     <button class="tasks-filter-chip tasks-filter-chip--active" data-filter="all">Toutes</button>
-    <button class="tasks-filter-chip" data-filter="partnerA">${info.partnerA.name}</button>
-    <button class="tasks-filter-chip" data-filter="partnerB">${info.partnerB.name}</button>`;
+    <button class="tasks-filter-chip" data-filter="${me}">${info[me].name}</button>
+    <button class="tasks-filter-chip" data-filter="${other}">${info[other].name}</button>`;
 }
 
 function handleFilterClick(e) {
@@ -105,7 +108,7 @@ function handleTaskComplete(e) {
   const btn = e.target.closest('[data-complete]');
   if (!btn || btn.disabled) return;
   const card = btn.closest('.task-card');
-  const result = processTaskCompletion(btn.dataset.complete, btn.dataset.partner);
+  const result = processTaskCompletion(btn.dataset.complete, getPartnerRole());
   if (!result) return;
   window.showToast(result.bonusApplied
     ? `+${result.points} pts (bonus streak !)` : `+${result.points} pts ! Bien joué !`);
@@ -192,6 +195,7 @@ function initTasks() {
   document.getElementById('task-list').addEventListener('click', handleTaskListClick);
   renderTaskList();
   window.renderTaskList = renderTaskList;
+  window.renderFilters = renderFilters;
 }
 
 export { initTasks, renderTaskList, openAddModal, closeAddModal };
