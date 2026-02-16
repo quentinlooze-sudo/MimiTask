@@ -88,7 +88,8 @@ async function createCouple(nameA, nameB) {
   if (!nameA?.trim() || !nameB?.trim()) throw new Error('INVALID_NAMES');
 
   try {
-    // Générer un code unique — permission-denied = doc n'existe pas = code disponible
+    // Générer un code unique — on tente le setDoc directement
+    // (getDoc échoue sur les rules car isMember ne peut pas évaluer un doc inexistant)
     let code = null;
     for (let i = 0; i < MAX_CODE_RETRIES; i++) {
       const candidate = generateCoupleCode();
@@ -96,12 +97,12 @@ async function createCouple(nameA, nameB) {
         const snapshot = await getDoc(doc(db, COUPLES_COLLECTION, candidate));
         if (!snapshot.exists()) { code = candidate; break; }
       } catch {
+        // permission-denied = le doc n'existe pas (rules ne matchent pas) → code disponible
         code = candidate; break;
       }
     }
     if (!code) throw new Error('CODE_GENERATION_FAILED');
 
-    // Créer le document couple (structure CLAUDE_v2.md)
     await setDoc(doc(db, COUPLES_COLLECTION, code), {
       partnerA: {
         name: nameA.trim(),

@@ -79,22 +79,3 @@ main {
   outline: 2px solid rgba(255, 255, 255, 0.6);
   outline-offset: 2px;
 }
-
-/* --- Sync indicator (header dot) --- */
-.sync-indicator {
-  position: fixed; top: var(--space-sm); right: var(--space-md);
-  z-index: 200; background: none; border: none;
-  padding: var(--space-xs); cursor: pointer; min-width: 44px; min-height: 44px;
-  display: flex; align-items: center; justify-content: center;
-}
-.sync-indicator__dot {
-  width: 8px; height: 8px; border-radius: var(--radius-full);
-  transition: background-color 300ms ease;
-}
-.sync-indicator__dot--ok { background-color: var(--color-primary-light); }
-.sync-indicator__dot--pending { background-color: var(--color-secondary); animation: pulse-dot 1s infinite; }
-.sync-indicator__dot--offline { background-color: var(--color-text-secondary); }
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}

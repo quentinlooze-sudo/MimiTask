@@ -4,16 +4,15 @@
    ============================================== */
 
 import * as store from './store.js';
-import { isToday, debounce } from './utils.js';
+import { debounce } from './utils.js';
 import { processTaskCompletion } from './points.js';
 import { celebrateRewardUnlock } from './rewards.js';
-import { renderDelegationBanner, getDelegationBadge, getDelegateButton, handleDelegateClick, handleDelegationResponse } from './delegation.js';
+import { renderDelegationBanner, handleDelegateClick, handleDelegationResponse } from './delegation.js';
+import { renderEmptyState, buildAccordionHTML, buildSearchResultsHTML } from './task-renderer.js';
 import { getPartnerRole } from './auth.js';
-import { buildCardHTML, renderEmptyState, buildAccordionHTML, buildSearchResultsHTML } from './task-renderer.js';
 
 let currentFilter = 'all';
 let currentSearchQuery = '';
-let accordionState = {};
 const ACCORDION_KEY = 'mimitask_accordion_state';
 const modalEl = () => document.getElementById('add-task-modal');
 const formEl = () => document.getElementById('add-task-form');
@@ -21,88 +20,54 @@ const formEl = () => document.getElementById('add-task-form');
 /* Retourne les infos des partenaires pour l'affichage */
 function getPartnerInfo() {
   const c = store.getCouple();
-  return {
-    partnerA: { name: c.partnerA.name || 'Partenaire 1', initial: (c.partnerA.name || 'A')[0] },
-    partnerB: { name: c.partnerB.name || 'Partenaire 2', initial: (c.partnerB.name || 'B')[0] }
-  };
+  const mk = (p, fb) => ({ name: p.name || fb, initial: (p.name || fb[0])[0] });
+  return { partnerA: mk(c.partnerA, 'Partenaire 1'), partnerB: mk(c.partnerB, 'Partenaire 2') };
 }
 
-/* Persistence de l'état accordéon (localStorage uniquement) */
+/* État ouvert/fermé des accordéons (persisté en localStorage) */
 function loadAccordionState() {
-  try { accordionState = JSON.parse(localStorage.getItem(ACCORDION_KEY)) || {}; }
-  catch { accordionState = {}; }
+  try { return JSON.parse(localStorage.getItem(ACCORDION_KEY)) || {}; } catch { return {}; }
 }
-function saveAccordionState() {
-  try { localStorage.setItem(ACCORDION_KEY, JSON.stringify(accordionState)); } catch {}
-}
+function saveAccordionState(s) { localStorage.setItem(ACCORDION_KEY, JSON.stringify(s)); }
 
 /* Rendu principal de la liste de tâches */
 function renderTaskList(filter) {
   if (filter !== undefined) currentFilter = filter;
   const info = getPartnerInfo();
   let tasks = store.getTasks();
+  const myRole = getPartnerRole();
 
-  if (currentFilter !== 'all') tasks = tasks.filter(t => t.assignedTo === currentFilter);
+  /* "all" = toutes, sinon filtre = tâches déléguées vers ce partenaire */
+  if (currentFilter !== 'all') {
+    tasks = tasks.filter(t => t.assignedTo === currentFilter && t.delegationStatus?.status === 'accepted');
+  }
 
   const container = document.getElementById('task-list');
 
-  /* Empty states */
+  /* Empty state : aucune tâche */
   if (store.getTasks().length === 0) {
     container.innerHTML = renderEmptyState('noTasks');
     document.getElementById('empty-add-task')?.addEventListener('click', openAddModal);
     return;
   }
 
-  /* Mode recherche : liste plate filtrée */
+  /* Mode recherche : liste plate */
   if (currentSearchQuery) {
     const q = currentSearchQuery.toLowerCase();
-    const filtered = tasks.filter(t => t.name.toLowerCase().includes(q));
-    if (filtered.length === 0) {
-      container.innerHTML = renderEmptyState('noSearchResults');
-      return;
-    }
-    container.innerHTML = buildSearchResultsHTML(filtered, info);
+    const matching = tasks.filter(t => t.name.toLowerCase().includes(q));
+    container.innerHTML = matching.length > 0
+      ? buildSearchResultsHTML(matching, info)
+      : renderEmptyState('noSearchResults');
     return;
   }
 
   /* Mode normal : accordéon par récurrence */
-  const active = tasks.filter(t => !t.completedAt || !isToday(t.completedAt));
-  const done = tasks.filter(t => t.completedAt && isToday(t.completedAt));
-  if (active.length === 0 && done.length > 0) {
-    container.innerHTML = renderEmptyState('allDone')
-      + done.map(t => buildCardHTML(t, info, true)).join('');
-    return;
-  }
   const banner = renderDelegationBanner(info);
+  const accordionState = loadAccordionState();
   container.innerHTML = banner + buildAccordionHTML(tasks, info, accordionState);
 }
 
-/* Gestion de la recherche */
-function handleSearchInput(e) {
-  currentSearchQuery = e.target.value.trim();
-  renderTaskList();
-}
-
-/* Toggle accordéon (ouvert/fermé) */
-function handleAccordionToggle(e) {
-  const btn = e.target.closest('[data-accordion-toggle]');
-  if (!btn) return;
-  const key = btn.dataset.accordionToggle;
-  const isOpen = btn.getAttribute('aria-expanded') === 'true';
-  const newState = !isOpen;
-
-  btn.setAttribute('aria-expanded', newState);
-  btn.classList.toggle('accordion__header--open', newState);
-  const body = btn.nextElementSibling;
-  if (body) {
-    body.classList.toggle('accordion__body--open', newState);
-    body.hidden = !newState;
-  }
-  accordionState[key] = newState;
-  saveAccordionState();
-}
-
-/* Filtres */
+/* Génère les chips de filtre : Toutes (défaut) + prénom A + prénom B (déléguées) */
 function renderFilters() {
   const info = getPartnerInfo();
   const me = getPartnerRole() || 'partnerA';
@@ -121,14 +86,36 @@ function handleFilterClick(e) {
   renderTaskList(chip.dataset.filter);
 }
 
+/* Recherche en temps réel */
+function handleSearchInput(e) {
+  currentSearchQuery = e.target.value.trim();
+  renderTaskList();
+}
+
+/* Toggle accordéon (ouverture/fermeture d'une section) */
+function handleAccordionToggle(e) {
+  const btn = e.target.closest('[data-accordion-toggle]');
+  if (!btn) return;
+  const recKey = btn.dataset.accordionToggle;
+  const body = btn.closest('.accordion').querySelector('.accordion__body');
+  const isOpen = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', String(!isOpen));
+  btn.classList.toggle('accordion__header--open');
+  body.classList.toggle('accordion__body--open');
+  body.hidden = isOpen;
+  const state = loadAccordionState();
+  state[recKey] = !isOpen;
+  saveAccordionState(state);
+}
+
 function handleTaskComplete(e) {
   const btn = e.target.closest('[data-complete]');
   if (!btn || btn.disabled) return;
   const card = btn.closest('.task-card');
   const result = processTaskCompletion(btn.dataset.complete, getPartnerRole());
   if (!result) return;
-  window.showToast(result.bonusApplied
-    ? `+${result.points} pts (bonus streak !)` : `+${result.points} pts ! Bien joué !`);
+  if (result.isPaidDelegated) window.showToast('Tâche complétée (0 pts — déléguée)');
+  else window.showToast(result.bonusApplied ? `+${result.points} pts (bonus streak !)` : `+${result.points} pts ! Bien joué !`);
   if (result.milestone) window.showToast(`🔥 ${result.milestone} jours d'affilée ! Continue comme ça !`);
   if (result.rewardUnlocked) celebrateRewardUnlock(result.rewardUnlocked);
   card.classList.add('task-card--completing');
@@ -146,8 +133,8 @@ function handleTaskListClick(e) {
 
 function populateAssignSelect() {
   const c = store.getCouple();
-  document.getElementById('task-assign').innerHTML = `
-    <option value="partnerA">${c.partnerA.name || 'Partenaire 1'}</option>
+  const sel = document.getElementById('task-assign');
+  sel.innerHTML = `<option value="partnerA">${c.partnerA.name || 'Partenaire 1'}</option>
     <option value="partnerB">${c.partnerB.name || 'Partenaire 2'}</option>
     <option value="random">Aléatoire</option>`;
 }
@@ -155,18 +142,14 @@ function populateAssignSelect() {
 function openAddModal() {
   populateAssignSelect(); formEl().reset();
   const el = modalEl();
-  el.classList.add('modal-overlay--active');
-  el.setAttribute('aria-hidden', 'false');
-  document.getElementById('task-name').focus();
-  el.addEventListener('keydown', trapFocus);
+  el.classList.add('modal-overlay--active'); el.setAttribute('aria-hidden', 'false');
+  document.getElementById('task-name').focus(); el.addEventListener('keydown', trapFocus);
 }
 
 function closeAddModal() {
   const el = modalEl();
-  el.classList.remove('modal-overlay--active');
-  el.setAttribute('aria-hidden', 'true');
-  el.removeEventListener('keydown', trapFocus);
-  document.getElementById('fab-add-task').focus();
+  el.classList.remove('modal-overlay--active'); el.setAttribute('aria-hidden', 'true');
+  el.removeEventListener('keydown', trapFocus); document.getElementById('fab-add-task').focus();
 }
 
 function trapFocus(e) {
@@ -179,20 +162,19 @@ function trapFocus(e) {
 
 function handleSubmit(e) {
   e.preventDefault();
-  const nameIn = document.getElementById('task-name');
-  const ptsIn = document.getElementById('task-points');
-  const name = nameIn.value.trim();
-  const points = parseInt(ptsIn.value);
+  const nameIn = document.getElementById('task-name'), ptsIn = document.getElementById('task-points');
+  const name = nameIn.value.trim(), points = parseInt(ptsIn.value);
   if (!name) { nameIn.classList.add('form-group__input--error'); nameIn.focus(); return; }
   if (points < 1 || points > 20 || isNaN(points)) { ptsIn.classList.add('form-group__input--error'); ptsIn.focus(); return; }
   let assignedTo = document.getElementById('task-assign').value;
   if (assignedTo === 'random') assignedTo = Math.random() < 0.5 ? 'partnerA' : 'partnerB';
   store.addTask({ name, points, assignedTo, recurrence: document.getElementById('task-recurrence').value });
-  closeAddModal(); window.showToast('Tâche ajoutée !'); renderTaskList();
+  closeAddModal(); window.showToast('Tâche ajoutée !');
+  currentFilter = 'all'; renderFilters(); renderTaskList();
 }
 
 function initTasks() {
-  loadAccordionState();
+  /* Modal */
   document.getElementById('fab-add-task').addEventListener('click', openAddModal);
   document.getElementById('close-add-task').addEventListener('click', closeAddModal);
   modalEl().addEventListener('click', (e) => { if (e.target === modalEl()) closeAddModal(); });
@@ -204,9 +186,8 @@ function initTasks() {
     input.addEventListener('input', () => input.classList.remove('form-group__input--error'));
   });
 
-  /* Recherche (debounce 150ms) */
-  const searchInput = document.getElementById('task-search');
-  if (searchInput) searchInput.addEventListener('input', debounce(handleSearchInput, 150));
+  /* Recherche */
+  document.getElementById('task-search').addEventListener('input', debounce(handleSearchInput, 150));
 
   /* Filtres + liste */
   renderFilters();

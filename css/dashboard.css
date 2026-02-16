@@ -36,7 +36,7 @@
   background-color: rgba(255, 255, 255, 0.15);
 }
 .balance__fill--a {
-  background: linear-gradient(90deg, #1B4332, #2D6A4F);
+  background: linear-gradient(90deg, #52B788, #95D5B2);
   transition: width 500ms ease; height: 100%;
 }
 .balance__fill--b {
@@ -48,13 +48,13 @@
   font-size: 13px; font-weight: var(--font-weight-bold);
 }
 .balance__label { display: flex; align-items: center; gap: var(--space-xs); }
-.balance__label:first-child { color: var(--color-primary); }
-.balance__label:last-child { color: var(--color-primary-light); }
+.balance__label:first-child { color: #95D5B2; }
+.balance__label:last-child { color: #F4A261; }
 .balance__dot {
   width: 12px; height: 12px; border-radius: var(--radius-full); flex-shrink: 0;
 }
-.balance__dot--a { background-color: var(--color-partner-a); }
-.balance__dot--b { background-color: var(--color-partner-b); }
+.balance__dot--a { background-color: #95D5B2; }
+.balance__dot--b { background-color: #F4A261; }
 
 /* --- Scores --- */
 .scores { display: flex; gap: var(--space-sm); }
@@ -80,6 +80,13 @@
   border-radius: var(--radius-lg);
 }
 .mascot__pet { width: 120px; height: auto; }
+/* Couleurs paramétrables de la mascotte */
+.mascot__pet svg { width: 120px; height: auto; display: block; }
+.mimi-body { fill: var(--mascot-color, #52B788); }
+.mimi-belly { fill: var(--mascot-belly, #95D5B2); }
+.mimi-arm { stroke: var(--mascot-color, #52B788); stroke-width: 5; stroke-linecap: round; fill: none; }
+.mimi-crest { stroke: var(--mascot-color, #52B788); stroke-width: 1.5; stroke-linejoin: round; }
+.mimi-mouth-outline { stroke: var(--mascot-color, #52B788); }
 
 /* Animations par humeur */
 .mascot__pet--excited {
@@ -145,6 +152,9 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
 }
+.next-reward__info { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.next-reward__name { font-weight: var(--font-weight-bold); font-size: var(--font-size-base); }
+.next-reward__remaining { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
 .next-reward__progress {
   height: 8px; border-radius: var(--radius-full);
   background-color: rgba(255, 255, 255, 0.15); overflow: hidden;

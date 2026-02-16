@@ -67,14 +67,12 @@
 
 /* --- Noms longs : ellipsis --- */
 
-.task-card__name,
 .reward-card__name,
 .score-card__label,
 .balance__label,
 .streak__count {
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.task-card__name { max-width: 160px; }
 .reward-card__name { max-width: 180px; }
 
 /* --- Screen transition (subtil) --- */

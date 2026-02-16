@@ -228,6 +228,12 @@
               background-color var(--transition-fast);
 }
 
+.modal select option,
+.form-input option {
+  background: #FFFFFF;
+  color: #1A1A2E;
+}
+
 .form-input:focus,
 .modal input:focus,
 .modal select:focus,
@@ -270,6 +276,41 @@
   letter-spacing: var(--letter-spacing-tight);
 }
 
+/* --- Modale migration (v1 → Firestore) --- */
+
+.migration-modal {
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+}
+
+.migration-modal__icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+.migration-modal__title {
+  font-family: var(--font-family-accent);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: var(--space-sm);
+}
+
+.migration-modal__text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  margin-bottom: var(--space-md);
+}
+
+.migration-modal__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
 /* --- Carte --- */
 
 .card {
@@ -279,3 +320,36 @@
   border-radius: var(--radius-md);
   padding: var(--space-md);
 }
+
+/* --- App Header --- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  padding-top: max(var(--space-sm), env(safe-area-inset-top));
+}
+.app-header__title {
+  font-family: var(--font-family-accent);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+/* --- Sync Indicator --- */
+.sync-indicator {
+  display: flex; align-items: center; justify-content: center;
+  background: none; border: none; padding: var(--space-sm);
+  cursor: pointer; min-width: 44px; min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+}
+.sync-indicator__dot {
+  width: 8px; height: 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-sync-offline);
+  transition: background-color var(--transition-fast);
+}
+.sync-indicator__dot--ok { background-color: var(--color-sync-ok); }
+.sync-indicator__dot--pending { background-color: var(--color-sync-pending); }
+.sync-indicator__dot--offline { background-color: var(--color-sync-offline); }

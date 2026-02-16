@@ -8,6 +8,7 @@ import { initTasks, renderTaskList } from './tasks.js';
 import { initDashboard, renderDashboard } from './dashboard.js';
 import { initRewards } from './rewards.js';
 import { checkStreaksAtBoot } from './points.js';
+import { initMascotCustomizer } from './mascot-customizer.js';
 
 /* Navigation entre les onglets */
 function initNavigation() {
@@ -31,12 +32,18 @@ function initNavigation() {
 function showToast(message, type = 'success', duration = 3000) {
   const container = document.getElementById('toast-container');
   if (!container) return;
+
   const toast = document.createElement('div');
   toast.className = `toast toast--${type}`;
   toast.textContent = message;
+
   container.appendChild(toast);
+
+  // Forcer le reflow avant d'ajouter la classe visible
   toast.offsetHeight;
   toast.classList.add('toast--visible');
+
+  // Retrait automatique après la durée
   setTimeout(() => {
     toast.classList.remove('toast--visible');
     toast.addEventListener('transitionend', () => toast.remove(), { once: true });
@@ -45,15 +52,11 @@ function showToast(message, type = 'success', duration = 3000) {
 
 /* Initialisation au chargement */
 document.addEventListener('DOMContentLoaded', async () => {
-  // Auth Firebase (import dynamique — si Firebase absent, l'app continue en localStorage)
-  try {
-    const { initAuth } = await import('./auth.js');
-    await initAuth();
-  } catch (err) {
-    console.warn('[app] Auth Firebase indisponible, mode local actif.');
-  }
+  try { const { initAuth } = await import('./auth.js'); await initAuth(); }
+  catch { console.warn('[app] Auth Firebase indisponible, mode local actif.'); }
 
   store.init();
+  await store.syncFromFirestore();
   initNavigation();
 
   // Reset des tâches récurrentes au lancement
@@ -70,67 +73,73 @@ document.addEventListener('DOMContentLoaded', async () => {
     initOnboarding();
   }
 
+  // Migration LocalStorage → Firestore pour les utilisateurs v1
+  try {
+    const { checkMigration } = await import('./migration.js');
+    await checkMigration();
+  } catch (err) { console.warn('[app] Migration check echouee:', err); }
+
   // Initialiser les écrans
   initTasks();
   initDashboard();
   initRewards();
   initSettings();
 
-  // Mascot customizer (import dynamique)
-  try {
-    const { initMascotCustomizer } = await import('./mascot-customizer.js');
-    initMascotCustomizer();
-  } catch (err) { console.warn('[app] Mascot customizer non disponible:', err); }
+  // Sync temps réel Firestore (après init pour que window.render* soient dispo)
+  try { const m = await import('./sync.js'); m.initIndicator(); m.startSync(); }
+  catch (err) { console.warn('[app] Sync temps reel indisponible:', err); }
 
-  // Sync indicator
-  try {
-    const { initSyncIndicator } = await import('./sync-indicator.js');
-    initSyncIndicator();
-  } catch { console.warn('[app] Sync indicator non disponible.'); }
-
-  // Sync Firestore
-  try {
-    await store.syncFromFirestore();
-    const { startSync } = await import('./sync.js');
-    startSync();
-    window.showSyncIndicator?.();
-  } catch { console.warn('[app] Sync Firestore non disponible.'); }
+  // Reset des tâches récurrentes quand l'app redevient visible (ex: après minuit)
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') return;
+    const n = store.checkAndResetRecurringTasks();
+    if (n > 0) { showToast(`${n} tâche${n > 1 ? 's' : ''} réinitialisée${n > 1 ? 's' : ''}`); renderTaskList(); renderDashboard(); }
+  });
 });
 
-/* Rafraîchit le code couple dans les paramètres */
+/* Met à jour le code couple affiché dans les paramètres */
 function refreshSettingsCode() {
-  const el = document.getElementById('settings-code-display');
-  if (el) el.textContent = store.getCoupleCode() || localStorage.getItem('mimitask_couple_code') || '—';
+  const codeEl = document.getElementById('settings-code-display');
+  if (!codeEl) return;
+  const code = store.getCoupleCode() || localStorage.getItem('mimitask_couple_code') || '';
+  codeEl.textContent = code || '—';
 }
 
 /* Initialise l'écran Paramètres */
 function initSettings() {
   const couple = store.getCouple();
   const namesEl = document.getElementById('settings-names-display');
-  if (namesEl && couple.partnerA.name) namesEl.textContent = `${couple.partnerA.name} & ${couple.partnerB.name}`;
+  if (namesEl && couple.partnerA.name) {
+    namesEl.textContent = `${couple.partnerA.name} & ${couple.partnerB.name}`;
+  }
   refreshSettingsCode();
+
+  /* Expose pour sync.js — rafraîchit l'affichage du code couple */
   window.refreshSettingsCode = refreshSettingsCode;
 
   document.getElementById('copy-couple-code')?.addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(store.getCoupleCode()); showToast('Code copié !'); }
-    catch { showToast('Impossible de copier', 'error'); }
+    try {
+      const code = store.getCoupleCode() || localStorage.getItem('mimitask_couple_code') || '';
+      if (!code) { showToast('Aucun code couple', 'error'); return; }
+      await navigator.clipboard.writeText(code);
+      showToast('Code copié !');
+    } catch { showToast('Impossible de copier', 'error'); }
   });
+
   document.getElementById('btn-export-data')?.addEventListener('click', () => {
     const blob = new Blob([store.exportData()], { type: 'application/json' });
-    const url = URL.createObjectURL(blob); const a = document.createElement('a');
-    a.href = url; a.download = 'mimitask-backup.json'; a.click(); URL.revokeObjectURL(url);
-    showToast('Données exportées !');
+    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'mimitask-backup.json' });
+    a.click(); URL.revokeObjectURL(a.href); showToast('Données exportées !');
   });
   document.getElementById('btn-reset-data')?.addEventListener('click', () => {
     if (!confirm('Supprimer toutes vos données ? Cette action est irréversible.')) return;
     store.resetAll(); showToast('Données réinitialisées.'); location.reload();
   });
+  initMascotCustomizer();
 }
 
 // Service Worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW registration failed:', err));
-}
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW registration failed:', err));
 
 // PWA install logic
 function initInstall() {
@@ -182,7 +191,6 @@ function initInstall() {
 initInstall();
 
 // Exposer pour les tests en console
-window.showToast = showToast;
-window.store = store;
+window.showToast = showToast; window.store = store;
 
 export { initNavigation, showToast };

@@ -29,6 +29,11 @@
   --color-warning: #FBBF24;
   --color-info: #60A5FA;
 
+  /* Sync indicator */
+  --color-sync-ok: #34D399;
+  --color-sync-pending: #FBBF24;
+  --color-sync-offline: #9CA3AF;
+
   /* Neutres (theme vert foret) */
   --color-bg: #1B4332;
   --color-bg-warm: #2D6A4F;

@@ -55,6 +55,7 @@ function getNextReward(partnerId) {
   const couplePts = stats.couplePoints || 0;
   const rewards = store.getRewards().filter(r => !r.unlockedAt && r.type !== 'power');
   if (rewards.length === 0) return null;
+  /* Trie par "restant" croissant pour trouver la plus proche */
   rewards.sort((a, b) => {
     const ra = a.pointsCost - (a.type === 'couple' ? couplePts : myPts);
     const rb = b.pointsCost - (b.type === 'couple' ? couplePts : myPts);

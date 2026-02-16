@@ -76,7 +76,7 @@ function renderNextReward() {
     <span class="next-reward__icon">🎁</span>
     <div class="next-reward__info">
       <span class="next-reward__name">${next.name}</span>
-      <span class="next-reward__remaining">Encore ${next.remaining} pts</span>
+      <span class="next-reward__remaining">(encore ${next.remaining} pts)</span>
       <div class="next-reward__progress">
         <div class="next-reward__progress-fill" style="width:${pct}%"></div>
       </div>

@@ -1,21 +1,17 @@
 /* ==============================================
    MimiTask — Mascotte réactive (Mimi le dino)
-   SVG kawaii chargé selon l'équilibre et les streaks
-   Couleurs personnalisées via store.getMascotPrefs()
+   SVG inline + couleur/accessoire depuis les prefs
    ============================================== */
 
 import * as store from './store.js';
+import { COLORS, ACCESSORIES } from './mascot-customizer.js';
+import svgExcited from '../assets/mascot/mimi-excited.svg?raw';
+import svgHappy from '../assets/mascot/mimi-happy.svg?raw';
+import svgNeutral from '../assets/mascot/mimi-neutral.svg?raw';
+import svgWorried from '../assets/mascot/mimi-worried.svg?raw';
+import svgSad from '../assets/mascot/mimi-sad.svg?raw';
 
-/* Couleurs par défaut (vert forêt) et palette complète */
-const DEFAULT_BODY = '#2D6A4F';
-const DEFAULT_BELLY = '#52B788';
-const COLORS = [
-  { id: 'vert', body: '#2D6A4F', belly: '#52B788' },
-  { id: 'orange', body: '#E76F51', belly: '#F4A261' },
-  { id: 'violet', body: '#7209B7', belly: '#9D4EDD' },
-  { id: 'bleu', body: '#0077B6', belly: '#48CAE4' },
-  { id: 'rouge', body: '#E63946', belly: '#FF758F' }
-];
+const SVG_MAP = { excited: svgExcited, happy: svgHappy, neutral: svgNeutral, worried: svgWorried, sad: svgSad };
 
 const PHRASES = {
   excited: ["Inarrêtables ! Mimi danse de joie !", "Équilibre + streak au top !", "Mimi fait des cabrioles !", "Fier de mon équipe !"],
@@ -26,13 +22,14 @@ const PHRASES = {
 };
 
 const rand = arr => arr[Math.floor(Math.random() * arr.length)];
-const svgCache = {};
 
 /* Détermine l'état d'humeur de Mimi */
 function getMascotState() {
   const stats = store.getStats();
   const balance = store.getBalance();
-  if (stats.couplePoints === 0) return { state: 'happy', phrase: "Bienvenue ! Mimi a hâte de vous voir en action." };
+  if (stats.couplePoints === 0) {
+    return { state: 'happy', phrase: "Bienvenue ! Mimi a hâte de vous voir en action." };
+  }
   const minRatio = Math.min(balance.partnerA, balance.partnerB);
   const bestStreak = Math.max(stats.partnerA.currentStreak, stats.partnerB.currentStreak);
   let state;
@@ -44,36 +41,17 @@ function getMascotState() {
   return { state, phrase: rand(PHRASES[state]) };
 }
 
-/* Récupère les couleurs choisies par l'utilisateur */
-function getMascotColors() {
-  const prefs = store.getMascotPrefs?.();
-  const colorId = prefs?.colorId || 'vert';
-  return COLORS.find(c => c.id === colorId) || COLORS[0];
-}
-
-/* Charge un SVG et le colorie */
-async function loadColoredSVG(state) {
-  const url = `assets/mascot/mimi-${state}.svg`;
-  if (!svgCache[state]) {
-    try {
-      const resp = await fetch(url);
-      svgCache[state] = await resp.text();
-    } catch { svgCache[state] = ''; }
-  }
-  let svg = svgCache[state];
-  const { body, belly } = getMascotColors();
-  svg = svg.replaceAll(DEFAULT_BODY, body).replaceAll(DEFAULT_BELLY, belly);
-  return svg;
-}
-
-/* Met à jour le DOM de la mascotte avec le SVG correspondant */
-async function renderMascot() {
+/* Met à jour le DOM de la mascotte avec couleur + accessoire */
+function renderMascot() {
   const el = document.getElementById('dashboard-mascot');
   if (!el) return;
   const { state, phrase } = getMascotState();
+  const prefs = store.getMascotPrefs();
+  const color = COLORS.find(c => c.id === prefs.colorId) || COLORS[0];
+  const acc = ACCESSORIES.find(a => a.id === prefs.accessoryId);
+  const accHtml = acc?.svg ? `<div style="position:absolute;inset:0;color:#1A1A2E">${acc.svg}</div>` : '';
   const emojiEl = el.querySelector('.mascot__emoji');
-  const svgHtml = await loadColoredSVG(state);
-  emojiEl.innerHTML = `<div class="mascot__pet mascot__pet--${state}">${svgHtml}</div>`;
+  emojiEl.innerHTML = `<div class="mascot__pet mascot__pet--${state}" style="--mascot-color:${color.body};--mascot-belly:${color.belly};position:relative">${SVG_MAP[state]}${accHtml}</div>`;
   el.querySelector('.mascot__speech').textContent = phrase;
 }
 
