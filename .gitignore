@@ -18,5 +18,15 @@ node_modules/
 # Build Vite
 dist/
 
+# Firebase
+.firebase/
+
+# Vite cache
+.vite/
+
+# Claude Code
+.claude/settings.local.json
+
 # Divers
 *.log
+nul
